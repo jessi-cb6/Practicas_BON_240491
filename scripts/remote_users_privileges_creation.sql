@@ -2,7 +2,7 @@
 DROP USER IF EXISTS 'marco.ramirez'@'%';
 DROP USER IF EXISTS 'jessica.cruz'@'%';
 DROP USER IF EXISTS 'luis.angel'@'%';
-DROP USER IF EXISTS ' manuel.cruz'@'%';
+DROP USER IF EXISTS 'manuel.cruz'@'%';
 DROP USER IF EXISTS 'julieta.barona'@'%';
 
 
@@ -52,4 +52,4 @@ to 'marco.ramirez'@'%';
 set default role 'seller'
 to 'manuel.cruz'@'%';
 set default role 'support'
-to 'julieta.barona.cruz'@'%';
+to 'julieta.barona'@'%';
