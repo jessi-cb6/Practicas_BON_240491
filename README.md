@@ -8,3 +8,5 @@ Periodo : Septiembre-Diciembre 2026
 |No.|Nombre|Descripcion|Potenciador|Estatus|
 |---|---|---|---|---|
 |1.| Metodologia de Evaluacion de la materia |Transcribir en la libreta y comprender la metodologia y fechas de evaluacion de la asignatura |05|
+
+#Esta es una actualizacion de la rama main
