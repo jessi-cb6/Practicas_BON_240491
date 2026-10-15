@@ -1,0 +1,9 @@
+﻿Codigo,Estado,Origen,Columnas_FK,Destino,Columnas_referenciadas,Cardinalidad,Reglas
+R01,Confirmada,tbc_categories,sup_id_category,tbc_categories,ID,N:1,
+R02,Confirmada,tbd_products_categories,categories_ID,tbc_categories,ID,N:1,ON DELETE CASCADE ON UPDATE CASCADE
+R03,Confirmada,tbd_products_categories,product_ID,tb_products,ID,N:1,ON DELETE CASCADE ON UPDATE CASCADE
+R04,Confirmada,tbd_products_users_providers,product_ID,tb_products,ID,N:1,
+R05,Confirmada,tbd_products_users_providers,user_ID,tb_users,ID,N:1,
+R06,Confirmada,tbd_users_wishlist_products,product_ID,tb_products,ID,N:1,
+R07,Confirmada,tbd_users_wishlist_products,user_ID,tb_users,ID,N:1,
+R08,Inferida,tb_logs,product_id,tb_products,ID,N:1 candidata,Sin FOREIGN KEY; inferencia por nombre y semántica de trazabilidad. Pendiente de validar.

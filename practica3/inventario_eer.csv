@@ -1,0 +1,50 @@
+﻿Codigo,Tabla,Columna,Tipo,Nullable,PK,FK,UK,AI,Default,Restricciones,Registros
+E01,tb_logs,A01 ID,int,NOT NULL,True,False,False,True,,PK NN AI,10133
+E01,tb_logs,A02 table_name,varchar(80),NOT NULL,False,False,False,False,,NN,10133
+E01,tb_logs,A03 table_operation,"enum('Create','Read','Update','Delete')",NULL,False,False,False,False,NULL,,10133
+E01,tb_logs,A04 db_user,varchar(80),NOT NULL,False,False,False,False,,NN,10133
+E01,tb_logs,A05 operation_date,datetime,NOT NULL,False,False,False,False,CURRENT_TIMESTAMP,NN,10133
+E01,tb_logs,A06 operation_description,text,NOT NULL,False,False,False,False,,NN,10133
+E01,tb_logs,A07 operation_status,bit(1),NULL,False,False,False,False,b'1',,10133
+E01,tb_logs,A08 product_id,int unsigned,NULL,False,False,False,False,NULL,,10133
+E02,tb_products,A01 ID,int unsigned,NOT NULL,True,False,False,True,,PK NN AI,5007
+E02,tb_products,A02 SKU,varchar(50),NOT NULL,False,False,True,False,,UK NN,5007
+E02,tb_products,A03 name,varchar(250),NOT NULL,False,False,False,False,,NN,5007
+E02,tb_products,A04 description,text,NULL,False,False,False,False,,,5007
+E02,tb_products,A05 current_price,"decimal(10,2)",NOT NULL,False,False,False,False,'0.00',NN,5007
+E02,tb_products,A06 current_stock,int unsigned,NOT NULL,False,False,False,False,'0',NN,5007
+E02,tb_products,A07 status,bit(1),NULL,False,False,False,False,b'1',,5007
+E02,tb_products,A08 creation_date,datetime,NOT NULL,False,False,False,False,CURRENT_TIMESTAMP,NN,5007
+E02,tb_products,A09 last_update,datetime,NOT NULL,False,False,False,False,CURRENT_TIMESTAMP,NN,5007
+E03,tb_users,A01 ID,int,NOT NULL,True,False,False,True,,PK NN AI,11
+E03,tb_users,A02 email,varchar(100),NOT NULL,False,False,True,False,,UK NN,11
+E03,tb_users,A03 nick,varchar(50),NOT NULL,False,False,True,False,,UK NN,11
+E03,tb_users,A04 password,varchar(255),NOT NULL,False,False,False,False,,NN,11
+E03,tb_users,A05 creation_date,datetime,NOT NULL,False,False,False,False,CURRENT_TIMESTAMP,NN,11
+E03,tb_users,A06 last_update,datetime,NULL,False,False,False,False,NULL,,11
+E03,tb_users,A07 last_login,datetime,NULL,False,False,False,False,NULL,,11
+E03,tb_users,A08 status,bit(1),NULL,False,False,False,False,b'1',,11
+E04,tbc_categories,A01 ID,int unsigned,NOT NULL,True,False,False,True,,PK NN AI,100
+E04,tbc_categories,A02 name,varchar(120),NOT NULL,False,False,True,False,,UK NN,100
+E04,tbc_categories,A03 description,text,NULL,False,False,False,False,,,100
+E04,tbc_categories,A04 sup_id_category,int unsigned,NULL,False,True,False,False,NULL,FK,100
+E04,tbc_categories,A05 status,bit(1),NOT NULL,False,False,False,False,b'1',NN,100
+E04,tbc_categories,A06 creation_date,datetime,NOT NULL,False,False,False,False,CURRENT_TIMESTAMP,NN,100
+E04,tbc_categories,A07 last_update,datetime,NOT NULL,False,False,False,False,,NN,100
+E05,tbd_products_categories,A01 product_ID,int unsigned,NOT NULL,True,True,False,False,,PK FK NN,4998
+E05,tbd_products_categories,A02 categories_ID,int unsigned,NOT NULL,True,True,False,False,,PK FK NN,4998
+E05,tbd_products_categories,A03 status,bit(1),NOT NULL,False,False,False,False,b'1',NN,4998
+E05,tbd_products_categories,A04 creation_date,datetime,NOT NULL,False,False,False,False,CURRENT_TIMESTAMP,NN,4998
+E05,tbd_products_categories,A05 last_update,datetime,NOT NULL,False,False,False,False,CURRENT_TIMESTAMP,NN,4998
+E06,tbd_products_users_providers,A01 user_ID,int,NOT NULL,True,True,False,False,,PK FK NN,0
+E06,tbd_products_users_providers,A02 product_ID,int unsigned,NOT NULL,True,True,False,False,,PK FK NN,0
+E06,tbd_products_users_providers,A03 type_ownership,"enum('Owner','Reseller','Distributor')",NULL,False,False,False,False,NULL,,0
+E06,tbd_products_users_providers,A04 status,bit(1),NOT NULL,False,False,False,False,b'1',NN,0
+E06,tbd_products_users_providers,A05 available_date,datetime,NOT NULL,False,False,False,False,,NN,0
+E06,tbd_products_users_providers,A06 creation_date,datetime,NOT NULL,False,False,False,False,CURRENT_TIMESTAMP,NN,0
+E06,tbd_products_users_providers,A07 last_update,datetime,NOT NULL,False,False,False,False,CURRENT_TIMESTAMP,NN,0
+E07,tbd_users_wishlist_products,A01 user_ID,int,NOT NULL,True,True,False,False,,PK FK NN,0
+E07,tbd_users_wishlist_products,A02 product_ID,int unsigned,NOT NULL,True,True,False,False,,PK FK NN,0
+E07,tbd_users_wishlist_products,A03 status,bit(1),NOT NULL,False,False,False,False,b'1',NN,0
+E07,tbd_users_wishlist_products,A04 creation_date,datetime,NOT NULL,False,False,False,False,CURRENT_TIMESTAMP,NN,0
+E07,tbd_users_wishlist_products,A05 last_update,datetime,NOT NULL,False,False,False,False,,NN,0

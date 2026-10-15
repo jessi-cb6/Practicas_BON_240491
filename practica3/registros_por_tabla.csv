@@ -1,0 +1,8 @@
+﻿Codigo,Tabla,Columnas,Registros_contenidos_en_respaldo
+E01,tb_logs,8,10133
+E02,tb_products,9,5007
+E03,tb_users,8,11
+E04,tbc_categories,7,100
+E05,tbd_products_categories,5,4998
+E06,tbd_products_users_providers,7,0
+E07,tbd_users_wishlist_products,5,0
