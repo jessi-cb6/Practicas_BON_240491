@@ -105,3 +105,12 @@ select * from vw_trazabilidad_usuarios order by operation_date asc;
 
 select count(*), vp.inserted_by from vw_trazabilidad_productos vp group by vp.inserted_by;
  
+
+ ## Evidencia 1
+SELECT * FROM vw_total_products_by_category ORDER BY category_id IS NULL, total_products DESC;
+
+# Evidencia 2
+SELECT * FROM vw_trazabilidad_categorias;
+
+# Evidencia 3
+SELECT * FROM vw_trazabilidad_categorizacion_productos LIMIT 100;

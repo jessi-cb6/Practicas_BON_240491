@@ -34,7 +34,8 @@ GRANT ALL PRIVILEGES ON *.* TO 'superadmin';
 
 GRANT SELECT, INSERT, UPDATE ON db_test.tb_users TO 'support'; 
 GRANT SELECT, INSERT, UPDATE ON db_test.tb_products TO 'support';
-
+GRANT SELECT, INSERT, UPDATE ON db_test.tbc_categories TO 'support';
+GRANT SELECT, INSERT, UPDATE ON db_test.tbd_products_categories TO 'support';
 GRANT SELECT, INSERT, UPDATE ON db_test.tb_products TO 'seller';
 
 
