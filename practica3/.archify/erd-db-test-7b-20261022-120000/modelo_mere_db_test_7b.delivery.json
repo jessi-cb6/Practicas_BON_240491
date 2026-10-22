@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "0a9e84d7-d269-4fe3-ab52-044f1bcd380c",
+  "status": "current",
+  "command": "deliver",
+  "type": "erd",
+  "input": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\candidate.json",
+  "output": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\modelo_mere_db_test_7b.html",
+  "specification": {
+    "sha256": "9cfc24023ad54a979b97c9830b61ec457aa9337aa57b8c3b0b05c94e46e49fd7",
+    "bytes": 23047
+  },
+  "artifact": {
+    "sha256": "0850914307b5f0bffa4d5e1b52b429b2556da03c449359cae1431bb813e4847f",
+    "bytes": 921779
+  }
+}

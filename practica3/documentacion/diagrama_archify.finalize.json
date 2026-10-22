@@ -1,0 +1,255 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "erd",
+  "quality": "standard",
+  "startedAt": "2026-10-22T15:59:38.110Z",
+  "specification": {
+    "path": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-20261022\\candidate.json",
+    "sha256": "0df6474c730bcd229af6d99ae3d8257341f5747d73294991fc221f5c1c5048b9",
+    "bytes": 11666
+  },
+  "artifact": {
+    "path": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\documentacion\\diagrama_archify.html"
+  },
+  "stages": {
+    "validate": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": null,
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\PC-20\\.agents\\skills\\archify\\bin\\archify.mjs",
+        "deliver",
+        "erd",
+        "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-20261022\\candidate.json",
+        "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\documentacion\\diagrama_archify.html",
+        "--quality",
+        "standard",
+        "--repo-root",
+        "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "33b2de64-7c44-47af-b5f9-dfdf5df56821",
+        "stage": "render",
+        "type": "erd",
+        "input": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-20261022\\candidate.json",
+        "output": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\documentacion\\diagrama_archify.html",
+        "error": "Entity-relationship layout validation failed:\n- Entity \"tb_logs\" attribute 2 \"table_operation\" needs 353px of text but only 186px is available — For this attribute row's text capacity, set entities[0].width to at least 407px, preserving the attribute name, type and key roles.\n- Entity \"tbd_products_categories\" attribute 1 \"categories_ID\" needs 170px of text but only 166px is available — For this attribute row's text capacity, set entities[4].width to at least 244px, preserving the attribute name, type and key roles.\n- Entity \"tbd_products_users_providers\" attribute 2 \"type_ownership\" needs 340px of text but only 166px is available — For this attribute row's text capacity, set entities[5].width to at least 414px, preserving the attribute name, type and key roles.\n- Relationship 0 id \"rel_01\" connects entity \"tbc_categories\" to itself — draw it between two entities or describe the self-reference in a card.",
+        "diagnostics": [
+          {
+            "code": "erd/attribute-text-capacity",
+            "severity": "error",
+            "message": "Entity \"tb_logs\" attribute 2 \"table_operation\" needs 353px of text but only 186px is available — For this attribute row's text capacity, set entities[0].width to at least 407px, preserving the attribute name, type and key roles.",
+            "subject": {
+              "diagramType": "erd",
+              "entityId": "tb_logs",
+              "attributeIndex": 2,
+              "attributeName": "table_operation"
+            },
+            "evidence": {
+              "entityWidth": 240,
+              "requiredEntityWidth": 407,
+              "availableTextWidth": 186,
+              "requiredTextWidth": 352.7,
+              "paddingWidth": 24,
+              "keyColumnWidth": 30,
+              "nameFontSize": 11,
+              "typeFontSize": 10.5
+            },
+            "supportedFixes": [
+              "For this attribute row's text capacity, set entities[0].width to at least 407px, preserving the attribute name, type and key roles."
+            ]
+          },
+          {
+            "code": "erd/attribute-text-capacity",
+            "severity": "error",
+            "message": "Entity \"tbd_products_categories\" attribute 1 \"categories_ID\" needs 170px of text but only 166px is available — For this attribute row's text capacity, set entities[4].width to at least 244px, preserving the attribute name, type and key roles.",
+            "subject": {
+              "diagramType": "erd",
+              "entityId": "tbd_products_categories",
+              "attributeIndex": 1,
+              "attributeName": "categories_ID"
+            },
+            "evidence": {
+              "entityWidth": 240,
+              "requiredEntityWidth": 244,
+              "availableTextWidth": 166,
+              "requiredTextWidth": 169.39999999999998,
+              "paddingWidth": 24,
+              "keyColumnWidth": 50,
+              "nameFontSize": 11,
+              "typeFontSize": 10.5
+            },
+            "supportedFixes": [
+              "For this attribute row's text capacity, set entities[4].width to at least 244px, preserving the attribute name, type and key roles."
+            ]
+          },
+          {
+            "code": "erd/attribute-text-capacity",
+            "severity": "error",
+            "message": "Entity \"tbd_products_users_providers\" attribute 2 \"type_ownership\" needs 340px of text but only 166px is available — For this attribute row's text capacity, set entities[5].width to at least 414px, preserving the attribute name, type and key roles.",
+            "subject": {
+              "diagramType": "erd",
+              "entityId": "tbd_products_users_providers",
+              "attributeIndex": 2,
+              "attributeName": "type_ownership"
+            },
+            "evidence": {
+              "entityWidth": 240,
+              "requiredEntityWidth": 414,
+              "availableTextWidth": 166,
+              "requiredTextWidth": 339.8,
+              "paddingWidth": 24,
+              "keyColumnWidth": 50,
+              "nameFontSize": 11,
+              "typeFontSize": 10.5
+            },
+            "supportedFixes": [
+              "For this attribute row's text capacity, set entities[5].width to at least 414px, preserving the attribute name, type and key roles."
+            ]
+          },
+          {
+            "code": "layout/constraint",
+            "severity": "error",
+            "message": "Relationship 0 id \"rel_01\" connects entity \"tbc_categories\" to itself — draw it between two entities or describe the self-reference in a card.",
+            "subject": {
+              "diagramType": "erd"
+            },
+            "evidence": {},
+            "supportedFixes": []
+          }
+        ],
+        "provenance": "absent",
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "not-run",
+      "execution": "blocked-by-validate"
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "erd/attribute-text-capacity",
+      "severity": "error",
+      "message": "Entity \"tb_logs\" attribute 2 \"table_operation\" needs 353px of text but only 186px is available — For this attribute row's text capacity, set entities[0].width to at least 407px, preserving the attribute name, type and key roles.",
+      "subject": {
+        "diagramType": "erd",
+        "entityId": "tb_logs",
+        "attributeIndex": 2,
+        "attributeName": "table_operation"
+      },
+      "evidence": {
+        "entityWidth": 240,
+        "requiredEntityWidth": 407,
+        "availableTextWidth": 186,
+        "requiredTextWidth": 352.7,
+        "paddingWidth": 24,
+        "keyColumnWidth": 30,
+        "nameFontSize": 11,
+        "typeFontSize": 10.5
+      },
+      "supportedFixes": [
+        "For this attribute row's text capacity, set entities[0].width to at least 407px, preserving the attribute name, type and key roles."
+      ]
+    },
+    {
+      "code": "erd/attribute-text-capacity",
+      "severity": "error",
+      "message": "Entity \"tbd_products_categories\" attribute 1 \"categories_ID\" needs 170px of text but only 166px is available — For this attribute row's text capacity, set entities[4].width to at least 244px, preserving the attribute name, type and key roles.",
+      "subject": {
+        "diagramType": "erd",
+        "entityId": "tbd_products_categories",
+        "attributeIndex": 1,
+        "attributeName": "categories_ID"
+      },
+      "evidence": {
+        "entityWidth": 240,
+        "requiredEntityWidth": 244,
+        "availableTextWidth": 166,
+        "requiredTextWidth": 169.39999999999998,
+        "paddingWidth": 24,
+        "keyColumnWidth": 50,
+        "nameFontSize": 11,
+        "typeFontSize": 10.5
+      },
+      "supportedFixes": [
+        "For this attribute row's text capacity, set entities[4].width to at least 244px, preserving the attribute name, type and key roles."
+      ]
+    },
+    {
+      "code": "erd/attribute-text-capacity",
+      "severity": "error",
+      "message": "Entity \"tbd_products_users_providers\" attribute 2 \"type_ownership\" needs 340px of text but only 166px is available — For this attribute row's text capacity, set entities[5].width to at least 414px, preserving the attribute name, type and key roles.",
+      "subject": {
+        "diagramType": "erd",
+        "entityId": "tbd_products_users_providers",
+        "attributeIndex": 2,
+        "attributeName": "type_ownership"
+      },
+      "evidence": {
+        "entityWidth": 240,
+        "requiredEntityWidth": 414,
+        "availableTextWidth": 166,
+        "requiredTextWidth": 339.8,
+        "paddingWidth": 24,
+        "keyColumnWidth": 50,
+        "nameFontSize": 11,
+        "typeFontSize": 10.5
+      },
+      "supportedFixes": [
+        "For this attribute row's text capacity, set entities[5].width to at least 414px, preserving the attribute name, type and key roles."
+      ]
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Relationship 0 id \"rel_01\" connects entity \"tbc_categories\" to itself — draw it between two entities or describe the self-reference in a card.",
+      "subject": {
+        "diagramType": "erd"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ],
+  "evidence": {
+    "receipt": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\documentacion\\diagrama_archify.finalize.json",
+    "summaryReceipt": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\documentacion\\diagrama_archify.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "validate",
+  "finishedAt": "2026-10-22T15:59:38.735Z",
+  "durationMs": 624,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-22T15:59:13.270Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

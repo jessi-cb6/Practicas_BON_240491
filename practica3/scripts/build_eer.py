@@ -5,7 +5,7 @@ import csv, html, json, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / 'respaldos' / 'db_test_completo_practica3.sql'
+SOURCE = ROOT / 'respaldos' / 'db_test_jessi.sql'
 OUT = ROOT / 'eer_db_test.html'
 
 def split_sql(s: str) -> list[str]:

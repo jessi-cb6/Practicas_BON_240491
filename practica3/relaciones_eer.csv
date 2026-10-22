@@ -1,9 +1,22 @@
 ﻿Codigo,Estado,Origen,Columnas_FK,Destino,Columnas_referenciadas,Cardinalidad,Reglas
-R01,Confirmada,tbc_categories,sup_id_category,tbc_categories,ID,N:1,
-R02,Confirmada,tbd_products_categories,categories_ID,tbc_categories,ID,N:1,ON DELETE CASCADE ON UPDATE CASCADE
-R03,Confirmada,tbd_products_categories,product_ID,tb_products,ID,N:1,ON DELETE CASCADE ON UPDATE CASCADE
-R04,Confirmada,tbd_products_users_providers,product_ID,tb_products,ID,N:1,
-R05,Confirmada,tbd_products_users_providers,user_ID,tb_users,ID,N:1,
-R06,Confirmada,tbd_users_wishlist_products,product_ID,tb_products,ID,N:1,
-R07,Confirmada,tbd_users_wishlist_products,user_ID,tb_users,ID,N:1,
-R08,Inferida,tb_logs,product_id,tb_products,ID,N:1 candidata,Sin FOREIGN KEY; inferencia por nombre y semántica de trazabilidad. Pendiente de validar.
+R01,Confirmada,tb_buyer_orders,seller_ID,tb_users,ID,N:1,
+R02,Confirmada,tb_carts,user_ID,tb_users,ID,N:1,
+R03,Confirmada,tb_user_addresses,user_ID,tb_users,ID,N:1,
+R04,Confirmada,tbc_categories,sup_id_category,tbc_categories,ID,N:1,
+R05,Confirmada,tbd_address_components,address_ID,tb_user_addresses,ID,N:1,ON DELETE RESTRICT
+R06,Confirmada,tbd_address_components,"address_ID,address_sup_ID",tbd_address_components,"address_ID,ID",N:1,ON DELETE RESTRICT
+R07,Confirmada,tbd_carts_items,cart_ID,tb_carts,ID,N:1,
+R08,Confirmada,tbd_carts_items,provider_ID,tbd_products_users_providers,user_ID,N:1,
+R09,Confirmada,tbd_carts_items,product_ID,tbd_products_users_providers,product_ID,N:1,
+R10,Confirmada,tbd_order_items,seller_order_ID,tb_buyer_orders,ID,N:1,
+R11,Confirmada,tbd_order_items,product_ID,tbd_products_users_providers,product_ID,N:1,
+R12,Confirmada,tbd_order_items,provider_ID,tbd_products_users_providers,user_ID,N:1,
+R13,Confirmada,tbd_products_categories,categories_ID,tbc_categories,ID,N:1,ON DELETE CASCADE ON UPDATE CASCADE
+R14,Confirmada,tbd_products_categories,product_ID,tb_products,ID,N:1,ON DELETE CASCADE ON UPDATE CASCADE
+R15,Confirmada,tbd_products_users_providers,product_ID,tb_products,ID,N:1,
+R16,Confirmada,tbd_products_users_providers,user_ID,tb_users,ID,N:1,
+R17,Confirmada,tbd_user_payment_methods,user_ID,tb_users,ID,N:1,
+R18,Confirmada,tbd_user_payment_methods,payment_method_type_ID,tbc_payment_methods_types,ID,N:1,
+R19,Confirmada,tbd_users_wishlist_products,product_ID,tb_products,ID,N:1,
+R20,Confirmada,tbd_users_wishlist_products,user_ID,tb_users,ID,N:1,
+R21,Inferida,tb_logs,product_id,tb_products,ID,N:1 candidata,Sin FOREIGN KEY; inferencia por nombre y semántica de trazabilidad. Pendiente de validar.

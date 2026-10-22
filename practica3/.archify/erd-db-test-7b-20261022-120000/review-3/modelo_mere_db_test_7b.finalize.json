@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "erd",
+  "quality": "standard",
+  "startedAt": "2026-10-22T19:11:10.734Z",
+  "specification": {
+    "path": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\candidate.json",
+    "sha256": "6fff523f640e35fcf1035cc55eab414b02bca60db7a403b16db4b856a85d2d95",
+    "bytes": 23023
+  },
+  "artifact": {
+    "path": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\modelo_mere_db_test_7b.html",
+    "sha256": "cb4d7ab224432e0a439badfdabe8b2b8250d973e57c77a3cadee16ae41472cd8",
+    "bytes": 912356
+  },
+  "stages": {
+    "validate": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": null,
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\PC-20\\.agents\\skills\\archify\\bin\\archify.mjs",
+        "deliver",
+        "erd",
+        "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\candidate.json",
+        "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\modelo_mere_db_test_7b.html",
+        "--quality",
+        "standard",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "4cab4c34-2daf-4a71-a0d5-3f73ddb630b4",
+        "stage": "render",
+        "type": "erd",
+        "input": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\candidate.json",
+        "output": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\modelo_mere_db_test_7b.html",
+        "error": "Entity-relationship layout validation failed:\n- Label \"user_ID\" overlaps entity \"tb_user_addresses\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [162, 630, 49, 14]\n  entity \"tb_user_addresses\" rect: [32, 360, 334, 276]\n  Suggested fix: set labelAt [187, 650] or set labelDy 10 (below); or set labelAt [187, 352] or set labelDy -288 (above)",
+        "diagnostics": [
+          {
+            "code": "layout/constraint",
+            "severity": "error",
+            "message": "Label \"user_ID\" overlaps entity \"tb_user_addresses\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [162, 630, 49, 14]\n  entity \"tb_user_addresses\" rect: [32, 360, 334, 276]\n  Suggested fix: set labelAt [187, 650] or set labelDy 10 (below); or set labelAt [187, 352] or set labelDy -288 (above)",
+            "subject": {
+              "diagramType": "erd"
+            },
+            "evidence": {},
+            "supportedFixes": []
+          }
+        ],
+        "provenance": "failed",
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "not-run",
+      "execution": "blocked-by-validate"
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"user_ID\" overlaps entity \"tb_user_addresses\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [162, 630, 49, 14]\n  entity \"tb_user_addresses\" rect: [32, 360, 334, 276]\n  Suggested fix: set labelAt [187, 650] or set labelDy 10 (below); or set labelAt [187, 352] or set labelDy -288 (above)",
+      "subject": {
+        "diagramType": "erd"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ],
+  "evidence": {
+    "receipt": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\review-3\\modelo_mere_db_test_7b.finalize.json",
+    "summaryReceipt": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\review-3\\modelo_mere_db_test_7b.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "validate",
+  "finishedAt": "2026-10-22T19:11:11.303Z",
+  "durationMs": 568,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-22T15:59:13.270Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

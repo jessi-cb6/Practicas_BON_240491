@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "command": "deliver",
+  "status": "pending",
+  "receiptId": "33b2de64-7c44-47af-b5f9-dfdf5df56821",
+  "input": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-20261022\\candidate.json",
+  "output": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\documentacion\\diagrama_archify.html"
+}

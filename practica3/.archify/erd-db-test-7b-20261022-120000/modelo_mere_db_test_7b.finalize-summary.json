@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "erd",
+  "quality": "standard",
+  "specification": {
+    "path": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\candidate.json",
+    "sha256": "b6495e2a5253c401bddb9b3166179acad301adf453c6855ee2b72a965a7c52fa",
+    "bytes": 21392
+  },
+  "artifact": {
+    "path": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\modelo_mere_db_test_7b.html",
+    "sha256": "cb4d7ab224432e0a439badfdabe8b2b8250d973e57c77a3cadee16ae41472cd8",
+    "bytes": 912356
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "fail"
+  },
+  "failedStage": "browser-check",
+  "diagnostics": [
+    {
+      "code": "viewer/browser-check-runtime",
+      "severity": "error",
+      "message": "browser-check could not complete its Chrome inspection.",
+      "subject": {
+        "artifact": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\modelo_mere_db_test_7b.html"
+      },
+      "evidence": {
+        "reason": "Chrome DevTools write pipe failed: stream closed\nChrome process: still running.\nWindows browser startup may have relaunched before connecting to the DevTools pipe. Retry from a non-elevated PowerShell opened normally, outside an elevated or compatibility-mode parent. Archify does not disable browser de-elevation or the sandbox to preserve pipe handles.\nChrome transport: Node v24.20.0, libuv 1.52.1, win32; pid=17768, exitCode=null, signalCode=null.\nChrome read pipe: readable=true, ended=false, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=false, ended=true, destroyed=true, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      },
+      "supportedFixes": [
+        "resolve the reported Chrome inspection error, then rerun browser-check"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\modelo_mere_db_test_7b.finalize.json",
+    "summaryReceipt": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\modelo_mere_db_test_7b.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\.archify\\erd-db-test-7b-20261022-120000\\modelo_mere_db_test_7b.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-22T15:59:13.270Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 1518,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "fca3da85-249c-4113-9db9-cb45894b0970",
+  "status": "current",
+  "command": "deliver",
+  "type": "erd",
+  "input": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\documentacion\\diagrama_archify_db_test_jessi.candidate.json",
+  "output": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\documentacion\\diagrama_archify_db_test_jessi.html",
+  "specification": {
+    "sha256": "6131660522e90207ebc1f99f7b0488f5650d01a73261960af82b799c7da51087",
+    "bytes": 22279
+  },
+  "artifact": {
+    "sha256": "b16de7c3676c3c8f1b872511a2d802b4e7def3b0c869c8554abe167774ccb20d",
+    "bytes": 916064
+  }
+}

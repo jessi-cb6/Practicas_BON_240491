@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "erd",
+  "quality": "standard",
+  "specification": {
+    "path": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\documentacion\\diagrama_archify_db_test_jessi.candidate.json",
+    "sha256": "6131660522e90207ebc1f99f7b0488f5650d01a73261960af82b799c7da51087",
+    "bytes": 22279
+  },
+  "artifact": {
+    "path": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\documentacion\\diagrama_archify_db_test_jessi.html",
+    "sha256": "b16de7c3676c3c8f1b872511a2d802b4e7def3b0c869c8554abe167774ccb20d",
+    "bytes": 916064
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "fail"
+  },
+  "failedStage": "browser-check",
+  "diagnostics": [
+    {
+      "code": "viewer/browser-check-runtime",
+      "severity": "error",
+      "message": "browser-check could not complete its Chrome inspection.",
+      "subject": {
+        "artifact": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\documentacion\\diagrama_archify_db_test_jessi.html"
+      },
+      "evidence": {
+        "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nWindows browser startup may have relaunched before connecting to the DevTools pipe. Retry from a non-elevated PowerShell opened normally, outside an elevated or compatibility-mode parent. Archify does not disable browser de-elevation or the sandbox to preserve pipe handles.\nChrome transport: Node v24.20.0, libuv 1.52.1, win32; pid=3104, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      },
+      "supportedFixes": [
+        "resolve the reported Chrome inspection error, then rerun browser-check"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\documentacion\\diagrama_archify_db_test_jessi.finalize.json",
+    "summaryReceipt": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\documentacion\\diagrama_archify_db_test_jessi.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\PC-20\\Desktop\\jessi\\Practicas_BON_240491\\practica3\\documentacion\\diagrama_archify_db_test_jessi.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-22T15:59:13.270Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 1394,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}
