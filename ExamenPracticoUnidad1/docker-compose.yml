@@ -7,11 +7,11 @@ services:
     container_name: postgres_240491
     restart: always
     environment:
-      POSTGRES_DB: db_240491
-      POSTGRES_USER: user_240491
-      POSTGRES_PASSWORD: Password240491!
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT}:5432"
     volumes:
       - postgres_data_240491:/var/lib/postgresql/data
 
@@ -21,13 +21,15 @@ services:
     container_name: pgadmin_240491
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: "jessica.cruz@utxicotepec.edu.mx"
-      PGADMIN_DEFAULT_PASSWORD: "Password240491!"
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
       PGADMIN_CONFIG_SERVER_MODE: "False"
     ports:
-      - "40491:80" # Puerto asignado para Postgres / pgAdmin
+      - "${PGADMIN_PORT}:80"
     depends_on:
       - postgres_240491
+    volumes:
+      - pgadmin_data_240491:/var/lib/pgadmin
 
   # --- SERVICIO 3: MySQL ---
   mysql_240491:
@@ -35,30 +37,19 @@ services:
     container_name: mysql_240491
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: Password240491!
-      MYSQL_DATABASE: db_mysql_240491
-      MYSQL_USER: user_240491
-      MYSQL_PASSWORD: Password240491!
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3306:3306"
+      - "${MYSQL_PORT}:3306"
     volumes:
       - mysql_data_240491:/var/lib/mysql
 
-  # --- SERVICIO 4: phpMyAdmin (Interfaz Web para MySQL) ---
-  phpmyadmin_240491:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin_240491
-    restart: always
-    environment:
-      PMA_HOST: mysql_240491
-      MYSQL_ROOT_PASSWORD: Password240491!
-    ports:
-      - "40492:80" # Puerto asignado para MySQL / phpMyAdmin
-    depends_on:
-      - mysql_240491
-
 volumes:
   postgres_data_240491:
+    driver: local
+  pgadmin_data_240491:
     driver: local
   mysql_data_240491:
     driver: local
