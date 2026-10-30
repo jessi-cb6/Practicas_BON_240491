@@ -1,0 +1,243 @@
+-- ============================================================================
+-- SCRIPT OPTIMIZADO DE MYSQL 8.0: DDL, ROLES GLOBALES, TRIGGERS, ÍNDICES Y VISTAS
+-- Base de Datos: db_test_7b
+-- ============================================================================
+
+CREATE DATABASE IF NOT EXISTS db_test_7b;
+USE db_test_7b;
+
+-- ----------------------------------------------------------------------------
+-- 1. ESTRUCTURA DE TABLAS (DDL)
+-- ----------------------------------------------------------------------------
+DROP TABLE IF EXISTS tb_logs;
+DROP TABLE IF EXISTS tb_products;
+DROP TABLE IF EXISTS tb_users;
+
+CREATE TABLE tb_users (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    nick VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE tb_products (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    SKU VARCHAR(50) NOT NULL UNIQUE,
+    name VARCHAR(150) NOT NULL,
+    description TEXT,
+    current_price DECIMAL(10,2) NOT NULL,
+    current_stock INT NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE tb_logs (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    table_name VARCHAR(50) NOT NULL,
+    table_operation VARCHAR(10) NOT NULL,
+    record_id INT NOT NULL,
+    db_user VARCHAR(100) NOT NULL,
+    operation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    operation_description TEXT NOT NULL,
+    operation_status BOOLEAN NOT NULL DEFAULT TRUE
+) ENGINE=InnoDB;
+
+-- ----------------------------------------------------------------------------
+-- 2. ÍNDICE DE OPTIMIZACIÓN (Fórmula de alto rendimiento para Auditoría)
+-- ----------------------------------------------------------------------------
+CREATE INDEX idx_logs_trazabilidad 
+ON tb_logs (table_name, record_id, operation_date DESC);
+
+-- ----------------------------------------------------------------------------
+-- 3. ROLES DEL SISTEMA Y USUARIOS
+-- ----------------------------------------------------------------------------
+DROP ROLE IF EXISTS superadmin, admin, seller, buyer, guest, support, common, user_not_registered;
+
+CREATE ROLE superadmin;
+CREATE ROLE admin;
+CREATE ROLE seller;
+CREATE ROLE buyer;
+CREATE ROLE guest;
+CREATE ROLE support;
+CREATE ROLE common;
+CREATE ROLE user_not_registered;
+
+-- Asignación de Privilegios a Roles
+-- Superadmin: Acceso Global a todo el Servidor (*.*)
+GRANT ALL PRIVILEGES ON *.* TO superadmin WITH GRANT OPTION;
+
+-- Admin: Acceso Completo a la Base de Datos del Proyecto (db_test_7b.*)
+GRANT ALL PRIVILEGES ON db_test_7b.* TO admin;
+
+-- Demás roles operativos
+GRANT SELECT, INSERT, UPDATE ON db_test_7b.tb_users TO support;
+GRANT SELECT, INSERT, UPDATE ON db_test_7b.tb_products TO support;
+GRANT SELECT, INSERT, UPDATE ON db_test_7b.tb_products TO seller;
+GRANT SELECT ON db_test_7b.tb_products TO buyer, guest, common;
+
+-- Creación de Cuentas de Usuario
+DROP USER IF EXISTS 'angel.hernandez'@'%';
+DROP USER IF EXISTS 'luis.hernandez'@'%';
+DROP USER IF EXISTS 'marco.ramirez'@'%';
+DROP USER IF EXISTS 'jhonatan.ibarra'@'%';
+DROP USER IF EXISTS 'jessica.cruz'@'%';
+DROP USER IF EXISTS 'dorian.barrios'@'%';
+
+CREATE USER 'angel.hernandez'@'%' IDENTIFIED BY '240490';
+CREATE USER 'luis.hernandez'@'%' IDENTIFIED BY '240492';
+CREATE USER 'marco.ramirez'@'%' IDENTIFIED BY 'qwerty123';
+CREATE USER 'jhonatan.ibarra'@'%' IDENTIFIED BY '240080!';
+CREATE USER 'jessica.cruz'@'%' IDENTIFIED BY '240491';
+CREATE USER 'dorian.barrios'@'%' IDENTIFIED BY '240065';
+
+-- Permisos directos al usuario sin rol (dorian.barrios)
+GRANT SELECT, INSERT, UPDATE, DELETE ON db_test_7b.* TO 'dorian.barrios'@'%';
+
+-- Asignación de Roles a Usuarios y activación por defecto
+GRANT superadmin TO 'jessica.cruz'@'%';
+GRANT admin TO 'marco.ramirez'@'%';
+GRANT seller TO 'jhonatan.ibarra'@'%';
+GRANT seller TO 'luis.hernandez'@'%';
+GRANT support TO 'angel.hernandez'@'%';
+
+SET DEFAULT ROLE ALL TO 
+    'jessica.cruz'@'%',
+    'marco.ramirez'@'%',
+    'jhonatan.ibarra'@'%',
+    'luis.hernandez'@'%',
+    'angel.hernandez'@'%';
+
+FLUSH PRIVILEGES;
+
+-- ----------------------------------------------------------------------------
+-- 4. TRIGGERS DE AUDITORÍA (tb_users)
+-- ----------------------------------------------------------------------------
+DELIMITER //
+
+DROP TRIGGER IF EXISTS trg_users_after_insert//
+CREATE TRIGGER trg_users_after_insert
+AFTER INSERT ON tb_users
+FOR EACH ROW
+BEGIN
+    INSERT INTO tb_logs (table_name, table_operation, record_id, db_user, operation_description, operation_status)
+    VALUES (
+        'tb_users',
+        'Create',
+        NEW.ID,
+        USER(),
+        CONCAT('Usuario creado ID: ', NEW.ID, ', Email: ', NEW.email, ', Nick: ', NEW.nick),
+        TRUE
+    );
+END//
+
+DROP TRIGGER IF EXISTS trg_users_after_update//
+CREATE TRIGGER trg_users_after_update
+AFTER UPDATE ON tb_users
+FOR EACH ROW
+BEGIN
+    INSERT INTO tb_logs (table_name, table_operation, record_id, db_user, operation_description, operation_status)
+    VALUES (
+        'tb_users',
+        'Update',
+        NEW.ID,
+        USER(),
+        CONCAT('Usuario actualizado ID: ', NEW.ID, ', Email anterior: ', OLD.email, ', Email nuevo: ', NEW.email),
+        TRUE
+    );
+END//
+
+DROP TRIGGER IF EXISTS trg_users_after_delete//
+CREATE TRIGGER trg_users_after_delete
+AFTER DELETE ON tb_users
+FOR EACH ROW
+BEGIN
+    INSERT INTO tb_logs (table_name, table_operation, record_id, db_user, operation_description, operation_status)
+    VALUES (
+        'tb_users',
+        'Delete',
+        OLD.ID,
+        USER(),
+        CONCAT('Usuario eliminado ID: ', OLD.ID, ', Email: ', OLD.email),
+        TRUE
+    );
+END//
+
+-- ----------------------------------------------------------------------------
+-- 5. TRIGGERS DE AUDITORÍA (tb_products)
+-- ----------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS trg_products_after_insert//
+CREATE TRIGGER trg_products_after_insert
+AFTER INSERT ON tb_products
+FOR EACH ROW
+BEGIN
+    INSERT INTO tb_logs (table_name, table_operation, record_id, db_user, operation_description, operation_status)
+    VALUES (
+        'tb_products',
+        'Create',
+        NEW.ID,
+        USER(),
+        CONCAT('Producto creado SKU: ', NEW.SKU, ', Nombre: ', NEW.name, ', Precio: ', NEW.current_price),
+        TRUE
+    );
+END//
+
+DROP TRIGGER IF EXISTS trg_products_after_update//
+CREATE TRIGGER trg_products_after_update
+AFTER UPDATE ON tb_products
+FOR EACH ROW
+BEGIN
+    INSERT INTO tb_logs (table_name, table_operation, record_id, db_user, operation_description, operation_status)
+    VALUES (
+        'tb_products',
+        'Update',
+        NEW.ID,
+        USER(),
+        CONCAT('Producto actualizado SKU: ', NEW.SKU, ', Precio anterior: ', OLD.current_price, ', Precio nuevo: ', NEW.current_price),
+        TRUE
+    );
+END//
+
+DROP TRIGGER IF EXISTS trg_products_after_delete//
+CREATE TRIGGER trg_products_after_delete
+AFTER DELETE ON tb_products
+FOR EACH ROW
+BEGIN
+    INSERT INTO tb_logs (table_name, table_operation, record_id, db_user, operation_description, operation_status)
+    VALUES (
+        'tb_products',
+        'Delete',
+        OLD.ID,
+        USER(),
+        CONCAT('Producto eliminado SKU: ', OLD.SKU, ', Nombre: ', OLD.name),
+        TRUE
+    );
+END//
+
+DELIMITER ;
+
+-- ----------------------------------------------------------------------------
+-- 6. VISTAS DE TRAZABILIDAD
+-- ----------------------------------------------------------------------------
+CREATE OR REPLACE VIEW vw_trazabilidad_usuarios AS
+SELECT 
+    l.ID AS log_id,
+    l.table_operation AS accion,
+    l.record_id AS usuario_afectado_id,
+    l.db_user AS ejecutado_por,
+    l.operation_date AS fecha_hora,
+    l.operation_description AS detalle
+FROM tb_logs l
+WHERE l.table_name = 'tb_users'
+ORDER BY l.operation_date DESC;
+
+CREATE OR REPLACE VIEW vw_trazabilidad_productos AS
+SELECT 
+    l.ID AS log_id,
+    l.table_operation AS accion,
+    l.record_id AS producto_afectado_id,
+    l.db_user AS ejecutado_por,
+    l.operation_date AS fecha_hora,
+    l.operation_description AS detalle
+FROM tb_logs l
+WHERE l.table_name = 'tb_products'
+ORDER BY l.operation_date DESC;
