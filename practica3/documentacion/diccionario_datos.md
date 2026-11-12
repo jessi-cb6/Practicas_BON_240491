@@ -1,51 +1,61 @@
-# Diccionario de datos — db_test_7b
+# Diccionario de datos · db_test_7b
 
-**Fuente SQL:** `respaldos/db_test_jessi.sql` (3,546,495 bytes).  
-**Motor:** MySQL 8.0.36, según la cabecera del respaldo.  
-**Alcance:** definiciones y filas incluidas en el archivo; las cantidades no representan el servidor actual.
+**Fuente:** `respaldos/practica3_terminada2.sql`  
+**Motor:** MySQL 8.0 · **Tablas:** 26 · **Columnas:** 203 · **Filas en respaldo:** 128,893
+
+Los conteos son las filas incluidas en los INSERT del respaldo; no representan una consulta al servidor activo.
 
 ## Resumen
 
-El respaldo contiene 15 tablas físicas, 113 columnas, 20,252 filas en 16 sentencias INSERT, 20 claves foráneas declaradas, 5 vistas, 2 procedimientos y 39 triggers.
+| Tabla | Área | Columnas | Filas | Descripción |
+|---|---|---:|---:|---|
+| `tb_buyer_orders` | ventas | 8 | 0 | Cabecera de pedidos recibidos por un vendedor, con importes y etapa de cumplimiento. |
+| `tb_carts` | ventas | 5 | 0 | Carrito de compra asociado a una cuenta de usuario. |
+| `tb_logs` | auditoria | 8 | 91,770 | Bitácora de operaciones y cambios registrados en las entidades. |
+| `tb_order_cancellations` | ventas | 7 | 0 | Entidad del modelo relacional. |
+| `tb_orders` | ventas | 8 | 0 | Entidad del modelo relacional. |
+| `tb_payment_methods` | pagos | 7 | 0 | Entidad del modelo relacional. |
+| `tb_payment_transaction` | pagos | 10 | 0 | Entidad del modelo relacional. |
+| `tb_payments` | pagos | 9 | 0 | Entidad del modelo relacional. |
+| `tb_people` | cuentas | 12 | 7,502 | Entidad del modelo relacional. |
+| `tb_products` | catalogo | 9 | 7,008 | Catálogo de productos, precios vigentes, existencias y disponibilidad. |
+| `tb_refunds` | pagos | 9 | 0 | Entidad del modelo relacional. |
+| `tb_returns` | pagos | 7 | 0 | Entidad del modelo relacional. |
+| `tb_shipments` | pagos | 9 | 0 | Entidad del modelo relacional. |
+| `tb_user_addresses` | cuentas | 12 | 0 | Direcciones de envío y contacto asociadas a usuarios. |
+| `tb_users` | cuentas | 8 | 7,513 | Cuentas de usuario, acceso y estado de la cuenta. |
+| `tbc_categories` | catalogo | 7 | 100 | Catálogo jerárquico de categorías de productos. |
+| `tbc_payment_methods_types` | pagos | 6 | 0 | Catálogo de tipos de métodos de pago admitidos. |
+| `tbd_address_components` | cuentas | 8 | 0 | Componentes jerárquicos que desglosan una dirección. |
+| `tbd_cancellation_items` | ventas | 5 | 0 | Entidad del modelo relacional. |
+| `tbd_cart_items` | ventas | 6 | 0 | Entidad del modelo relacional. |
+| `tbd_order_items` | ventas | 9 | 0 | Detalle histórico de productos, cantidades y precios por pedido. |
+| `tbd_products_categories` | catalogo | 5 | 15,000 | Tabla puente entre productos y categorías. |
+| `tbd_products_users_providers` | proveedores | 7 | 0 | Relación de productos con usuarios proveedores o distribuidores. |
+| `tbd_return_items` | ventas | 6 | 0 | Entidad del modelo relacional. |
+| `tbd_user_payment_methods` | pagos | 11 | 0 | Métodos de pago registrados para los usuarios. |
+| `tbd_users_wishlist_products` | proveedores | 5 | 0 | Productos guardados por usuarios en listas de deseos. |
 
-| Tabla | Columnas | Filas del respaldo | Descripción |
-|---|---:|---:|---|
-| `tb_buyer_orders` | 8 | 0 | Cabecera de pedidos recibidos por un vendedor. Registra importes de subtotal y envío, etapa de cumplimiento, vigencia y fechas; las restricciones CHECK requieren importes no negativos. |
-| `tb_carts` | 5 | 0 | Carrito de compra vinculado a una cuenta. La clave UNIQUE de user_ID limita a un carrito por usuario. |
-| `tb_logs` | 8 | 10,136 | Bitácora de auditoría que almacena la entidad y operación afectadas, actor, fecha, descripción y resultado. product_id es una referencia informativa opcional, no una FK declarada. |
-| `tb_products` | 9 | 5,007 | Catálogo de productos con SKU único, descripción, precio actual, existencias, estado y marcas temporales. |
-| `tb_user_addresses` | 12 | 0 | Direcciones de entrega de las cuentas, con etiqueta, destinatario, instrucciones, coordenadas opcionales y marcas de vigencia. CHECK valida rangos y presencia conjunta de coordenadas. |
-| `tb_users` | 8 | 11 | Cuentas de usuario con correo y alias únicos, credencial, estado y fechas de alta, actualización y último acceso. |
-| `tbc_categories` | 7 | 100 | Catálogo jerárquico de categorías. Cada categoría puede referir opcionalmente a una categoría superior de la misma tabla. |
-| `tbc_payment_methods_types` | 6 | 0 | Catálogo de tipos de método de pago con código único, descripción, estado y fechas de mantenimiento. |
-| `tbd_address_components` | 8 | 0 | Componentes que desglosan una dirección. Una FK vincula con la dirección y otra, compuesta, enlaza opcionalmente el componente padre dentro de la misma dirección. |
-| `tbd_carts_items` | 5 | 0 | Líneas de carrito identificadas por carrito, proveedor y producto. quantity debe ser mayor que cero. |
-| `tbd_order_items` | 9 | 0 | Líneas históricas de pedido con producto/proveedor, nombre copiado, cantidad y precio unitario. subtotal es una columna generada almacenada como cantidad por precio. |
-| `tbd_products_categories` | 5 | 4,998 | Tabla puente entre productos y categorías. Su clave primaria compuesta impide duplicar una pareja producto-categoría. |
-| `tbd_products_users_providers` | 7 | 0 | Tabla puente que registra la relación de un usuario con un producto como titular, revendedor o distribuidor, junto con disponibilidad y estado. |
-| `tbd_user_payment_methods` | 11 | 0 | Métodos de pago asociados a usuarios y a un tipo del catálogo. El par proveedor/referencia externa es único. |
-| `tbd_users_wishlist_products` | 5 | 0 | Tabla puente de productos guardados por usuarios en listas de deseos, con estado y fechas. |
+## Diccionario por tabla
 
-## Diccionario detallado
+### `tb_buyer_orders`
 
-### tb_buyer_orders
+Cabecera de pedidos recibidos por un vendedor, con importes y etapa de cumplimiento.
 
-**Descripción.** Cabecera de pedidos recibidos por un vendedor. Registra importes de subtotal y envío, etapa de cumplimiento, vigencia y fechas; las restricciones CHECK requieren importes no negativos.
+**Filas del respaldo:** 0 · **Columnas:** 8
 
-**Filas incluidas en SQL:** 0.
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `int unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `seller_ID` | `int` | No | FK | — | Identificador del usuario vendedor. |
+| `subtotal` | `decimal(12,2)` | No | — | `'0.00'` | Importe subtotal calculado o almacenado para la operación. |
+| `shipping_cost` | `decimal(12,2)` | No | — | `'0.00'` | Importe del costo de envío. |
+| `fulfillment_status` | `enum('Pending','Accepted','Preparing','Sent','Delivered','Canceled','Returned')` | No | — | `'Pending'` | Etapa de preparación y entrega del pedido. Valores: `Pending`, `Accepted`, `Preparing`, `Sent`, `Delivered`, `Canceled`, `Returned`. |
+| `status` | `bit(1)` | No | — | `b'1'` | Indicador binario de estado; su significado exacto depende de la aplicación. |
+| `creation_date` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de creación del registro. |
+| `last_update` | `datetime` | Sí | — | `NULL` | Fecha y hora de la última modificación. |
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `ID` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Identificador técnico de la fila. | Cualitativa nominal; identificador/código | PK; NOT NULL; AUTO_INCREMENT | — |
-| `seller_ID` | `int` | Entero INT de 32 bits con signo. | Usuario vendedor asociado al pedido; FK a tb_users.ID. | Cualitativa nominal; identificador/código | FK; NOT NULL | `tb_users`.`ID` |
-| `subtotal` | `decimal(12,2)` | Decimal exacto DECIMAL(12,2): hasta 10 dígitos enteros y 2 decimales. | Importe subtotal del pedido; CHECK requiere valor no negativo. | Cuantitativa continua; importe | NOT NULL; DEFAULT '0.00' | — |
-| `shipping_cost` | `decimal(12,2)` | Decimal exacto DECIMAL(12,2): hasta 10 dígitos enteros y 2 decimales. | Importe del envío; CHECK requiere valor no negativo. | Cuantitativa continua; importe | NOT NULL; DEFAULT '0.00' | — |
-| `fulfillment_status` | `enum('Pending','Accepted','Preparing','Sent','Delivered','Canceled','Returned')` | Valores textuales cerrados: Pending, Accepted, Preparing, Sent, Delivered, Canceled, Returned. | Estado de cumplimiento del pedido, limitado a Pending, Accepted, Preparing, Sent, Delivered, Canceled o Returned. | Cualitativa nominal; categoría/indicador | NOT NULL; DEFAULT 'Pending' | — |
-| `status` | `bit(1)` | Campo de un bit, con valores 0 o 1; su significado funcional depende de la aplicación. | Indicador binario de estado; el esquema no define el significado funcional de 0 y 1. | Cualitativa nominal; categoría/indicador | NOT NULL; DEFAULT b'1' | — |
-| `creation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de creación del registro. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
-| `last_update` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de última actualización; cuando declara ON UPDATE, MySQL la modifica automáticamente. | Temporal; fecha y hora (escala no asignada) | NULL; DEFAULT NULL; ON UPDATE CURRENT_TIMESTAMP | — |
-
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
 
 - `PRIMARY KEY (`ID`)`
 - `KEY `seller_ID` (`seller_ID`)`
@@ -53,95 +63,329 @@ El respaldo contiene 15 tablas físicas, 113 columnas, 20,252 filas en 16 senten
 - `CONSTRAINT `tb_buyer_orders_chk_1` CHECK ((`subtotal` >= 0))`
 - `CONSTRAINT `tb_buyer_orders_chk_2` CHECK ((`shipping_cost` >= 0))`
 
-### tb_carts
+### `tb_carts`
 
-**Descripción.** Carrito de compra vinculado a una cuenta. La clave UNIQUE de user_ID limita a un carrito por usuario.
+Carrito de compra asociado a una cuenta de usuario.
 
-**Filas incluidas en SQL:** 0.
+**Filas del respaldo:** 0 · **Columnas:** 5
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `ID` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Identificador técnico de la fila. | Cualitativa nominal; identificador/código | PK; NOT NULL; AUTO_INCREMENT | — |
-| `user_ID` | `int` | Entero INT de 32 bits con signo. | Identificador de usuario; según la tabla es FK, parte de PK o clave UNIQUE. | Cualitativa nominal; identificador/código | UNIQUE; FK; NOT NULL | `tb_users`.`ID` |
-| `status` | `bit(1)` | Campo de un bit, con valores 0 o 1; su significado funcional depende de la aplicación. | Indicador binario de estado; el esquema no define el significado funcional de 0 y 1. | Cualitativa nominal; categoría/indicador | NULL; DEFAULT b'1' | — |
-| `creation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de creación del registro. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
-| `last_update` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de última actualización; cuando declara ON UPDATE, MySQL la modifica automáticamente. | Temporal; fecha y hora (escala no asignada) | NULL; DEFAULT NULL; ON UPDATE CURRENT_TIMESTAMP | — |
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `int unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `user_ID` | `int` | No | FK, UK | — | Identificador del usuario asociado. |
+| `status` | `bit(1)` | Sí | — | `b'1'` | Indicador binario de estado; su significado exacto depende de la aplicación. |
+| `creation_date` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de creación del registro. |
+| `last_update` | `datetime` | Sí | — | `NULL` | Fecha y hora de la última modificación. |
 
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
 
 - `PRIMARY KEY (`ID`)`
 - `UNIQUE KEY `uk_cart_user` (`user_ID`)`
 - `CONSTRAINT `tb_carts_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `tb_users` (`ID`)`
 
-### tb_logs
+### `tb_logs`
 
-**Descripción.** Bitácora de auditoría que almacena la entidad y operación afectadas, actor, fecha, descripción y resultado. product_id es una referencia informativa opcional, no una FK declarada.
+Bitácora de operaciones y cambios registrados en las entidades.
 
-**Filas incluidas en SQL:** 10,136.
+**Filas del respaldo:** 91,770 · **Columnas:** 8
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `ID` | `int` | Entero INT de 32 bits con signo. | Identificador técnico de la fila. | Cualitativa nominal; identificador/código | PK; NOT NULL; AUTO_INCREMENT | — |
-| `table_name` | `varchar(80)` | Cadena de longitud variable, máximo 80 caracteres; no se declara otro patrón. | Nombre textual de la tabla/entidad registrada en la bitácora. | Cualitativa nominal; texto descriptivo | NOT NULL | — |
-| `table_operation` | `enum('Create','Read','Update','Delete')` | Valores textuales cerrados: Create, Read, Update, Delete. | Operación auditada, limitada al ENUM declarado. | Cualitativa nominal; categoría/indicador | NULL; DEFAULT NULL | — |
-| `db_user` | `varchar(80)` | Cadena de longitud variable, máximo 80 caracteres; no se declara otro patrón. | Actor de base de datos consignado en el evento. | Cualitativa nominal; texto descriptivo | NOT NULL | — |
-| `operation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora en que se registró la operación. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
-| `operation_description` | `text` | Texto de longitud variable; el DDL no fija un límite funcional menor. | Detalle textual del evento auditado. | Cualitativa nominal; texto descriptivo | NOT NULL | — |
-| `operation_status` | `bit(1)` | Campo de un bit, con valores 0 o 1; su significado funcional depende de la aplicación. | Indicador binario de resultado; el DDL no define qué valor representa éxito o error. | Cualitativa nominal; categoría/indicador | NULL; DEFAULT b'1' | — |
-| `product_id` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Identificador opcional relacionado con el evento; no tiene FOREIGN KEY declarada. | Cualitativa nominal; identificador/código | NULL; DEFAULT NULL | Posible `tb_products`.`ID` por nombre/uso; no declarada como FK. |
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `int` | No | PK | — | Identificador técnico de la fila. |
+| `table_name` | `varchar(80)` | No | — | — | Entidad o tabla afectada por el evento auditado. |
+| `table_operation` | `enum('Create','Read','Update','Delete')` | Sí | — | `NULL` | Tipo de operación registrada en la bitácora. Valores: `Create`, `Read`, `Update`, `Delete`. |
+| `db_user` | `varchar(80)` | No | — | — | Usuario de base de datos consignado como actor. |
+| `operation_date` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora en que se registró el evento. |
+| `operation_description` | `text` | No | — | — | Descripción del evento de auditoría. |
+| `operation_status` | `bit(1)` | Sí | — | `b'1'` | Indicador binario del resultado registrado. |
+| `product_id` | `int unsigned` | Sí | — | `NULL` | Identificador relacionado con el evento; el respaldo no declara una FK para este campo. |
 
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
 
 - `PRIMARY KEY (`ID`)`
 - `KEY `idx_logs_table_op_date` (`table_name`,`table_operation`,`operation_date`)`
 - `KEY `idx_logs_product_trace` (`table_name`,`table_operation`,`product_id`)`
 - `KEY `idx_logs_tabla_operacion` (`table_name`,`table_operation`)`
+- `KEY `idx_logs_table_op` (`table_name`,`table_operation`)`
 
-### tb_products
+### `tb_order_cancellations`
 
-**Descripción.** Catálogo de productos con SKU único, descripción, precio actual, existencias, estado y marcas temporales.
+Entidad del modelo relacional.
 
-**Filas incluidas en SQL:** 5,007.
+**Filas del respaldo:** 0 · **Columnas:** 7
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `ID` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Identificador técnico de la fila. | Cualitativa nominal; identificador/código | PK; NOT NULL; AUTO_INCREMENT | — |
-| `SKU` | `varchar(50)` | Cadena de longitud variable, máximo 50 caracteres; no se declara otro patrón. | Código comercial único del producto. | Cualitativa nominal; identificador/código | UNIQUE; NOT NULL | — |
-| `name` | `varchar(250)` | Cadena de longitud variable, máximo 250 caracteres; no se declara otro patrón. | Nombre legible del producto o categoría. | Cualitativa nominal; texto descriptivo | NOT NULL | — |
-| `description` | `text` | Texto de longitud variable; el DDL no fija un límite funcional menor. | Descripción textual complementaria; no se impone formato en el DDL. | Cualitativa nominal; texto descriptivo | NULL | — |
-| `current_price` | `decimal(10,2)` | Decimal exacto DECIMAL(10,2): hasta 8 dígitos enteros y 2 decimales. | Precio monetario vigente del producto. | Cuantitativa continua; importe | NOT NULL; DEFAULT '0.00' | — |
-| `current_stock` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Unidades registradas en existencia. | Cuantitativa discreta; conteo/valor entero | NOT NULL; DEFAULT '0' | — |
-| `status` | `bit(1)` | Campo de un bit, con valores 0 o 1; su significado funcional depende de la aplicación. | Indicador binario de estado; el esquema no define el significado funcional de 0 y 1. | Cualitativa nominal; categoría/indicador | NULL; DEFAULT b'1' | — |
-| `creation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de creación del registro. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
-| `last_update` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de última actualización; cuando declara ON UPDATE, MySQL la modifica automáticamente. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP; ON UPDATE CURRENT_TIMESTAMP | — |
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `bigint unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `order_ID` | `int unsigned` | No | FK | — | Referencia a tb_orders.ID. |
+| `requested_by` | `int` | No | FK | — | Referencia a tb_users.ID. |
+| `reason` | `varchar(500)` | No | — | — | Dato reason asociado a tb order cancellations; descripción inferida del nombre y tipo SQL. |
+| `cancellation_status` | `enum('Requested','Approved','Rejected','Completed')` | No | — | `'Requested'` | Dato cancellation status asociado a tb order cancellations; descripción inferida del nombre y tipo SQL. Valores: `Requested`, `Approved`, `Rejected`, `Completed`. |
+| `created_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato created at asociado a tb order cancellations; descripción inferida del nombre y tipo SQL. |
+| `updated_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato updated at asociado a tb order cancellations; descripción inferida del nombre y tipo SQL. |
 
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
+
+- `PRIMARY KEY (`ID`)`
+- `KEY `idx_cancellations_order` (`order_ID`)`
+- `KEY `idx_cancellations_user` (`requested_by`)`
+- `CONSTRAINT `fk_cancellations_order` FOREIGN KEY (`order_ID`) REFERENCES `tb_orders` (`ID`)`
+- `CONSTRAINT `fk_cancellations_user` FOREIGN KEY (`requested_by`) REFERENCES `tb_users` (`ID`)`
+
+### `tb_orders`
+
+Entidad del modelo relacional.
+
+**Filas del respaldo:** 0 · **Columnas:** 8
+
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `int unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `buyer_ID` | `int` | No | FK | — | Referencia a tb_users.ID. |
+| `shipping_address_ID` | `bigint unsigned` | Sí | FK | `NULL` | Referencia a tb_user_addresses.ID. |
+| `subtotal` | `decimal(12,2)` | No | — | `'0.00'` | Importe subtotal calculado o almacenado para la operación. |
+| `shipping_cost` | `decimal(12,2)` | No | — | `'0.00'` | Importe del costo de envío. |
+| `order_status` | `enum('Pending','Paid','Processing','Shipped','Delivered','Canceled','Returned')` | No | — | `'Pending'` | Dato order status asociado a tb orders; descripción inferida del nombre y tipo SQL. Valores: `Pending`, `Paid`, `Processing`, `Shipped`, `Delivered`, `Canceled`, `Returned`. |
+| `created_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato created at asociado a tb orders; descripción inferida del nombre y tipo SQL. |
+| `updated_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato updated at asociado a tb orders; descripción inferida del nombre y tipo SQL. |
+
+**Índices y restricciones**
+
+- `PRIMARY KEY (`ID`)`
+- `KEY `idx_orders_buyer_created` (`buyer_ID`,`created_at`)`
+- `KEY `idx_orders_address` (`shipping_address_ID`)`
+- `CONSTRAINT `fk_orders_address` FOREIGN KEY (`shipping_address_ID`) REFERENCES `tb_user_addresses` (`ID`)`
+- `CONSTRAINT `fk_orders_buyer` FOREIGN KEY (`buyer_ID`) REFERENCES `tb_users` (`ID`)`
+- `CONSTRAINT `chk_orders_amounts` CHECK (((`subtotal` >= 0) and (`shipping_cost` >= 0)))`
+
+### `tb_payment_methods`
+
+Entidad del modelo relacional.
+
+**Filas del respaldo:** 0 · **Columnas:** 7
+
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `int unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `code` | `varchar(40)` | No | UK | — | Dato code asociado a tb payment methods; descripción inferida del nombre y tipo SQL. |
+| `name` | `varchar(100)` | No | — | — | Nombre visible del producto, categoría o elemento. |
+| `description` | `varchar(500)` | Sí | — | `NULL` | Descripción textual complementaria. |
+| `is_active` | `tinyint(1)` | No | — | `'1'` | Dato is active asociado a tb payment methods; descripción inferida del nombre y tipo SQL. |
+| `created_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato created at asociado a tb payment methods; descripción inferida del nombre y tipo SQL. |
+| `updated_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato updated at asociado a tb payment methods; descripción inferida del nombre y tipo SQL. |
+
+**Índices y restricciones**
+
+- `PRIMARY KEY (`ID`)`
+- `UNIQUE KEY `uk_payment_methods_code` (`code`)`
+- `KEY `idx_payment_methods_active` (`is_active`)`
+
+### `tb_payment_transaction`
+
+Entidad del modelo relacional.
+
+**Filas del respaldo:** 0 · **Columnas:** 10
+
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `bigint unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `payment_ID` | `bigint unsigned` | No | FK | — | Referencia a tb_payments.ID. |
+| `transaction_ref` | `varchar(150)` | No | UK | — | Dato transaction ref asociado a tb payment transaction; descripción inferida del nombre y tipo SQL. |
+| `transaction_type` | `enum('Authorize','Capture','Void','Charge','Refund')` | No | — | — | Dato transaction type asociado a tb payment transaction; descripción inferida del nombre y tipo SQL. Valores: `Authorize`, `Capture`, `Void`, `Charge`, `Refund`. |
+| `transaction_status` | `enum('Pending','Succeeded','Failed')` | No | — | `'Pending'` | Dato transaction status asociado a tb payment transaction; descripción inferida del nombre y tipo SQL. Valores: `Pending`, `Succeeded`, `Failed`. |
+| `amount` | `decimal(12,2)` | No | — | — | Dato amount asociado a tb payment transaction; descripción inferida del nombre y tipo SQL. |
+| `gateway` | `varchar(80)` | Sí | — | `NULL` | Dato gateway asociado a tb payment transaction; descripción inferida del nombre y tipo SQL. |
+| `response_code` | `varchar(80)` | Sí | — | `NULL` | Dato response code asociado a tb payment transaction; descripción inferida del nombre y tipo SQL. |
+| `created_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato created at asociado a tb payment transaction; descripción inferida del nombre y tipo SQL. |
+| `updated_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato updated at asociado a tb payment transaction; descripción inferida del nombre y tipo SQL. |
+
+**Índices y restricciones**
+
+- `PRIMARY KEY (`ID`)`
+- `UNIQUE KEY `uk_payment_transaction_ref` (`transaction_ref`)`
+- `KEY `idx_payment_transaction_payment_date` (`payment_ID`,`created_at`)`
+- `CONSTRAINT `fk_payment_transaction_payment` FOREIGN KEY (`payment_ID`) REFERENCES `tb_payments` (`ID`)`
+- `CONSTRAINT `chk_payment_transaction_amount` CHECK ((`amount` >= 0))`
+
+### `tb_payments`
+
+Entidad del modelo relacional.
+
+**Filas del respaldo:** 0 · **Columnas:** 9
+
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `bigint unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `order_ID` | `int unsigned` | No | FK | — | Referencia a tb_orders.ID. |
+| `payment_method_ID` | `int unsigned` | Sí | FK | `NULL` | Referencia a tb_payment_methods.ID. |
+| `amount` | `decimal(12,2)` | No | — | — | Dato amount asociado a tb payments; descripción inferida del nombre y tipo SQL. |
+| `currency` | `char(3)` | No | — | `'MXN'` | Dato currency asociado a tb payments; descripción inferida del nombre y tipo SQL. |
+| `payment_status` | `enum('Pending','Authorized','Paid','Failed','PartiallyRefunded','Refunded')` | No | — | `'Pending'` | Dato payment status asociado a tb payments; descripción inferida del nombre y tipo SQL. Valores: `Pending`, `Authorized`, `Paid`, `Failed`, `PartiallyRefunded`, `Refunded`. |
+| `paid_at` | `datetime` | Sí | — | `NULL` | Dato paid at asociado a tb payments; descripción inferida del nombre y tipo SQL. |
+| `created_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato created at asociado a tb payments; descripción inferida del nombre y tipo SQL. |
+| `updated_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato updated at asociado a tb payments; descripción inferida del nombre y tipo SQL. |
+
+**Índices y restricciones**
+
+- `PRIMARY KEY (`ID`)`
+- `KEY `idx_payments_order` (`order_ID`)`
+- `KEY `idx_payments_method` (`payment_method_ID`)`
+- `KEY `idx_payments_status_created` (`payment_status`,`created_at`)`
+- `CONSTRAINT `fk_payments_method` FOREIGN KEY (`payment_method_ID`) REFERENCES `tb_payment_methods` (`ID`)`
+- `CONSTRAINT `fk_payments_order` FOREIGN KEY (`order_ID`) REFERENCES `tb_orders` (`ID`)`
+- `CONSTRAINT `chk_payments_amount` CHECK ((`amount` >= 0))`
+
+### `tb_people`
+
+Entidad del modelo relacional.
+
+**Filas del respaldo:** 7,502 · **Columnas:** 12
+
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `person_ID` | `bigint` | No | PK | — | Identificador del perfil personal asociado. |
+| `user_ID` | `int` | Sí | FK, UK | `NULL` | Identificador del usuario asociado. |
+| `courtesy_title` | `varchar(20)` | Sí | — | `NULL` | Dato courtesy title asociado a tb people; descripción inferida del nombre y tipo SQL. |
+| `given_names` | `varchar(150)` | No | — | — | Dato given names asociado a tb people; descripción inferida del nombre y tipo SQL. |
+| `family_names` | `varchar(150)` | Sí | — | `NULL` | Dato family names asociado a tb people; descripción inferida del nombre y tipo SQL. |
+| `birth_date` | `date` | Sí | — | `NULL` | Fecha de nacimiento del perfil personal. |
+| `gender` | `enum('Hombre','Mujer','Prefiero no decirlo')` | No | — | `'Prefiero no decirlo'` | Género declarado en el perfil personal. Valores: `Hombre`, `Mujer`, `Prefiero no decirlo`. |
+| `country_code` | `char(2)` | Sí | — | `NULL` | Código de país asociado al perfil o teléfono. |
+| `phone` | `varchar(25)` | Sí | — | `NULL` | Número telefónico de contacto. |
+| `status` | `bit(1)` | Sí | — | `b'1'` | Indicador binario de estado; su significado exacto depende de la aplicación. |
+| `creation_date` | `datetime` | Sí | — | `CURRENT_TIMESTAMP` | Fecha y hora de creación del registro. |
+| `last_update` | `datetime` | Sí | — | `CURRENT_TIMESTAMP` | Fecha y hora de la última modificación. |
+
+**Índices y restricciones**
+
+- `PRIMARY KEY (`person_ID`)`
+- `UNIQUE KEY `user_ID` (`user_ID`)`
+- `CONSTRAINT `fk_people_users` FOREIGN KEY (`user_ID`) REFERENCES `tb_users` (`ID`)`
+
+### `tb_products`
+
+Catálogo de productos, precios vigentes, existencias y disponibilidad.
+
+**Filas del respaldo:** 7,008 · **Columnas:** 9
+
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `int unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `SKU` | `varchar(50)` | No | UK | — | Código comercial único del producto. |
+| `name` | `varchar(250)` | No | — | — | Nombre visible del producto, categoría o elemento. |
+| `description` | `text` | Sí | — | — | Descripción textual complementaria. |
+| `current_price` | `decimal(10,2)` | No | — | `'0.00'` | Precio vigente del producto. |
+| `current_stock` | `int unsigned` | No | — | `'0'` | Unidades registradas actualmente en existencia. |
+| `status` | `bit(1)` | Sí | — | `b'1'` | Indicador binario de estado; su significado exacto depende de la aplicación. |
+| `creation_date` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de creación del registro. |
+| `last_update` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de la última modificación. |
+
+**Índices y restricciones**
 
 - `PRIMARY KEY (`ID`)`
 - `UNIQUE KEY `SKU` (`SKU`)`
 
-### tb_user_addresses
+### `tb_refunds`
 
-**Descripción.** Direcciones de entrega de las cuentas, con etiqueta, destinatario, instrucciones, coordenadas opcionales y marcas de vigencia. CHECK valida rangos y presencia conjunta de coordenadas.
+Entidad del modelo relacional.
 
-**Filas incluidas en SQL:** 0.
+**Filas del respaldo:** 0 · **Columnas:** 9
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `ID` | `bigint unsigned` | Entero BIGINT de 64 bits sin signo (UNSIGNED). | Identificador técnico de la fila. | Cualitativa nominal; identificador/código | PK; NOT NULL; AUTO_INCREMENT | — |
-| `user_ID` | `int` | Entero INT de 32 bits con signo. | Identificador de usuario; según la tabla es FK, parte de PK o clave UNIQUE. | Cualitativa nominal; identificador/código | FK; NOT NULL | `tb_users`.`ID` |
-| `address_label` | `varchar(100)` | Cadena de longitud variable, máximo 100 caracteres; no se declara otro patrón. | Etiqueta libre para distinguir la dirección, por ejemplo casa o trabajo. | Cualitativa nominal; texto descriptivo | NOT NULL | — |
-| `recipient_name` | `varchar(150)` | Cadena de longitud variable, máximo 150 caracteres; no se declara otro patrón. | Nombre de quien recibirá el envío; opcional. | Cualitativa nominal; texto descriptivo | NULL; DEFAULT NULL | — |
-| `recipient_phone` | `varchar(25)` | Cadena de longitud variable, máximo 25 caracteres; no se declara otro patrón. | Teléfono de contacto opcional, guardado como texto para conservar prefijos y formato. | Cualitativa nominal; texto descriptivo | NULL; DEFAULT NULL | — |
-| `delivery_instructions` | `varchar(500)` | Cadena de longitud variable, máximo 500 caracteres; no se declara otro patrón. | Instrucciones opcionales para la entrega. | Cualitativa nominal; texto descriptivo | NULL; DEFAULT NULL | — |
-| `latitude` | `decimal(10,7)` | Decimal exacto DECIMAL(10,7): hasta 3 dígitos enteros y 7 decimales. | Latitud decimal opcional; CHECK limita el rango a −90..90 y requiere que ambas coordenadas estén presentes o ausentes. | Cuantitativa continua; coordenada | NULL; DEFAULT NULL | — |
-| `longitude` | `decimal(10,7)` | Decimal exacto DECIMAL(10,7): hasta 3 dígitos enteros y 7 decimales. | Longitud decimal opcional; CHECK limita el rango a −180..180 y requiere que ambas coordenadas estén presentes o ausentes. | Cuantitativa continua; coordenada | NULL; DEFAULT NULL | — |
-| `is_default` | `tinyint(1)` | Entero de 8 bits declarado tinyint(1); no es un booleano estricto. | Indicador numérico 0/1 de dirección o método predeterminado; tinyint(1) no constituye por sí solo una restricción booleana. | Cualitativa nominal; categoría/indicador | NOT NULL; DEFAULT '0' | — |
-| `status` | `bit(1)` | Campo de un bit, con valores 0 o 1; su significado funcional depende de la aplicación. | Indicador binario de estado; el esquema no define el significado funcional de 0 y 1. | Cualitativa nominal; categoría/indicador | NOT NULL; DEFAULT b'1' | — |
-| `creation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de creación del registro. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
-| `last_update` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de última actualización; cuando declara ON UPDATE, MySQL la modifica automáticamente. | Temporal; fecha y hora (escala no asignada) | NULL; DEFAULT NULL; ON UPDATE CURRENT_TIMESTAMP | — |
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `bigint unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `payment_ID` | `bigint unsigned` | No | FK | — | Referencia a tb_payments.ID. |
+| `return_ID` | `bigint unsigned` | Sí | FK | `NULL` | Referencia a tb_returns.ID. |
+| `amount` | `decimal(12,2)` | No | — | — | Dato amount asociado a tb refunds; descripción inferida del nombre y tipo SQL. |
+| `refund_status` | `enum('Pending','Processing','Succeeded','Failed')` | No | — | `'Pending'` | Dato refund status asociado a tb refunds; descripción inferida del nombre y tipo SQL. Valores: `Pending`, `Processing`, `Succeeded`, `Failed`. |
+| `reason` | `varchar(500)` | Sí | — | `NULL` | Dato reason asociado a tb refunds; descripción inferida del nombre y tipo SQL. |
+| `refunded_at` | `datetime` | Sí | — | `NULL` | Dato refunded at asociado a tb refunds; descripción inferida del nombre y tipo SQL. |
+| `created_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato created at asociado a tb refunds; descripción inferida del nombre y tipo SQL. |
+| `updated_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato updated at asociado a tb refunds; descripción inferida del nombre y tipo SQL. |
 
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
+
+- `PRIMARY KEY (`ID`)`
+- `KEY `idx_refunds_payment` (`payment_ID`)`
+- `KEY `idx_refunds_return` (`return_ID`)`
+- `KEY `idx_refunds_status` (`refund_status`)`
+- `CONSTRAINT `fk_refunds_payment` FOREIGN KEY (`payment_ID`) REFERENCES `tb_payments` (`ID`)`
+- `CONSTRAINT `fk_refunds_return` FOREIGN KEY (`return_ID`) REFERENCES `tb_returns` (`ID`)`
+- `CONSTRAINT `chk_refunds_amount` CHECK ((`amount` > 0))`
+
+### `tb_returns`
+
+Entidad del modelo relacional.
+
+**Filas del respaldo:** 0 · **Columnas:** 7
+
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `bigint unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `order_ID` | `int unsigned` | No | FK | — | Referencia a tb_orders.ID. |
+| `requested_by` | `int` | No | FK | — | Referencia a tb_users.ID. |
+| `return_status` | `enum('Requested','Approved','Rejected','InTransit','Received','Completed')` | No | — | `'Requested'` | Dato return status asociado a tb returns; descripción inferida del nombre y tipo SQL. Valores: `Requested`, `Approved`, `Rejected`, `InTransit`, `Received`, `Completed`. |
+| `reason` | `varchar(500)` | No | — | — | Dato reason asociado a tb returns; descripción inferida del nombre y tipo SQL. |
+| `created_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato created at asociado a tb returns; descripción inferida del nombre y tipo SQL. |
+| `updated_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato updated at asociado a tb returns; descripción inferida del nombre y tipo SQL. |
+
+**Índices y restricciones**
+
+- `PRIMARY KEY (`ID`)`
+- `KEY `idx_returns_order` (`order_ID`)`
+- `KEY `idx_returns_user` (`requested_by`)`
+- `KEY `idx_returns_status` (`return_status`)`
+- `CONSTRAINT `fk_returns_order` FOREIGN KEY (`order_ID`) REFERENCES `tb_orders` (`ID`)`
+- `CONSTRAINT `fk_returns_user` FOREIGN KEY (`requested_by`) REFERENCES `tb_users` (`ID`)`
+
+### `tb_shipments`
+
+Entidad del modelo relacional.
+
+**Filas del respaldo:** 0 · **Columnas:** 9
+
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `bigint unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `order_ID` | `int unsigned` | No | FK | — | Referencia a tb_orders.ID. |
+| `carrier` | `varchar(100)` | Sí | — | `NULL` | Dato carrier asociado a tb shipments; descripción inferida del nombre y tipo SQL. |
+| `tracking_number` | `varchar(150)` | Sí | UK | `NULL` | Dato tracking number asociado a tb shipments; descripción inferida del nombre y tipo SQL. |
+| `shipment_status` | `enum('Pending','Ready','InTransit','Delivered','Lost','Returned')` | No | — | `'Pending'` | Dato shipment status asociado a tb shipments; descripción inferida del nombre y tipo SQL. Valores: `Pending`, `Ready`, `InTransit`, `Delivered`, `Lost`, `Returned`. |
+| `shipped_at` | `datetime` | Sí | — | `NULL` | Dato shipped at asociado a tb shipments; descripción inferida del nombre y tipo SQL. |
+| `delivered_at` | `datetime` | Sí | — | `NULL` | Dato delivered at asociado a tb shipments; descripción inferida del nombre y tipo SQL. |
+| `created_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato created at asociado a tb shipments; descripción inferida del nombre y tipo SQL. |
+| `updated_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato updated at asociado a tb shipments; descripción inferida del nombre y tipo SQL. |
+
+**Índices y restricciones**
+
+- `PRIMARY KEY (`ID`)`
+- `UNIQUE KEY `uk_shipments_tracking` (`tracking_number`)`
+- `KEY `idx_shipments_order` (`order_ID`)`
+- `KEY `idx_shipments_status` (`shipment_status`)`
+- `CONSTRAINT `fk_shipments_order` FOREIGN KEY (`order_ID`) REFERENCES `tb_orders` (`ID`)`
+
+### `tb_user_addresses`
+
+Direcciones de envío y contacto asociadas a usuarios.
+
+**Filas del respaldo:** 0 · **Columnas:** 12
+
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `bigint unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `user_ID` | `int` | No | FK | — | Identificador del usuario asociado. |
+| `address_label` | `varchar(100)` | No | — | — | Dato address label asociado a tb user addresses; descripción inferida del nombre y tipo SQL. |
+| `recipient_name` | `varchar(150)` | Sí | — | `NULL` | Dato recipient name asociado a tb user addresses; descripción inferida del nombre y tipo SQL. |
+| `recipient_phone` | `varchar(25)` | Sí | — | `NULL` | Dato recipient phone asociado a tb user addresses; descripción inferida del nombre y tipo SQL. |
+| `delivery_instructions` | `varchar(500)` | Sí | — | `NULL` | Dato delivery instructions asociado a tb user addresses; descripción inferida del nombre y tipo SQL. |
+| `latitude` | `decimal(10,7)` | Sí | — | `NULL` | Coordenada geográfica de latitud. |
+| `longitude` | `decimal(10,7)` | Sí | — | `NULL` | Coordenada geográfica de longitud. |
+| `is_default` | `tinyint(1)` | No | — | `'0'` | Indicador de selección predeterminada. |
+| `status` | `bit(1)` | No | — | `b'1'` | Indicador binario de estado; su significado exacto depende de la aplicación. |
+| `creation_date` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de creación del registro. |
+| `last_update` | `datetime` | Sí | — | `NULL` | Fecha y hora de la última modificación. |
+
+**Índices y restricciones**
 
 - `PRIMARY KEY (`ID`)`
 - `KEY `idx_user_addresses` (`user_ID`)`
@@ -150,90 +394,90 @@ El respaldo contiene 15 tablas físicas, 113 columnas, 20,252 filas en 16 senten
 - `CONSTRAINT `chk_latitude` CHECK ((`latitude` between -(90) and 90))`
 - `CONSTRAINT `chk_longitude` CHECK ((`longitude` between -(180) and 180))`
 
-### tb_users
+### `tb_users`
 
-**Descripción.** Cuentas de usuario con correo y alias únicos, credencial, estado y fechas de alta, actualización y último acceso.
+Cuentas de usuario, acceso y estado de la cuenta.
 
-**Filas incluidas en SQL:** 11.
+**Filas del respaldo:** 7,513 · **Columnas:** 8
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `ID` | `int` | Entero INT de 32 bits con signo. | Identificador técnico de la fila. | Cualitativa nominal; identificador/código | PK; NOT NULL; AUTO_INCREMENT | — |
-| `email` | `varchar(100)` | Cadena de longitud variable, máximo 100 caracteres; no se declara otro patrón. | Correo asociado a la cuenta; la clave UNIQUE exige que no se repita. | Cualitativa nominal; identificador/código | UNIQUE; NOT NULL | — |
-| `nick` | `varchar(50)` | Cadena de longitud variable, máximo 50 caracteres; no se declara otro patrón. | Alias de la cuenta; la clave UNIQUE exige que no se repita. | Cualitativa nominal; identificador/código | UNIQUE; NOT NULL | — |
-| `password` | `varchar(255)` | Cadena de longitud variable, máximo 255 caracteres; no se declara otro patrón. | Cadena de credencial. El DDL no indica si el contenido está cifrado o resumido; se omite en ejemplos. | Cualitativa nominal; texto descriptivo | NOT NULL | — |
-| `creation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de creación del registro. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
-| `last_update` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de última actualización; cuando declara ON UPDATE, MySQL la modifica automáticamente. | Temporal; fecha y hora (escala no asignada) | NULL; DEFAULT NULL | — |
-| `last_login` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora del último acceso; NULL indica que no hay valor almacenado. | Temporal; fecha y hora (escala no asignada) | NULL; DEFAULT NULL | — |
-| `status` | `bit(1)` | Campo de un bit, con valores 0 o 1; su significado funcional depende de la aplicación. | Indicador binario de estado; el esquema no define el significado funcional de 0 y 1. | Cualitativa nominal; categoría/indicador | NULL; DEFAULT b'1' | — |
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `int` | No | PK | — | Identificador técnico de la fila. |
+| `email` | `varchar(100)` | No | UK | — | Correo electrónico asociado a la cuenta. |
+| `nick` | `varchar(50)` | No | UK | — | Alias o nombre corto de la cuenta. |
+| `password` | `varchar(255)` | No | — | — | Campo de credencial; el DDL no especifica el mecanismo de protección. |
+| `creation_date` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de creación del registro. |
+| `last_update` | `datetime` | Sí | — | `NULL` | Fecha y hora de la última modificación. |
+| `last_login` | `datetime` | Sí | — | `NULL` | Fecha y hora del último inicio de sesión. |
+| `status` | `bit(1)` | Sí | — | `b'1'` | Indicador binario de estado; su significado exacto depende de la aplicación. |
 
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
 
 - `PRIMARY KEY (`ID`)`
 - `UNIQUE KEY `email` (`email`)`
 - `UNIQUE KEY `nick` (`nick`)`
 
-### tbc_categories
+### `tbc_categories`
 
-**Descripción.** Catálogo jerárquico de categorías. Cada categoría puede referir opcionalmente a una categoría superior de la misma tabla.
+Catálogo jerárquico de categorías de productos.
 
-**Filas incluidas en SQL:** 100.
+**Filas del respaldo:** 100 · **Columnas:** 7
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `ID` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Identificador técnico de la fila. | Cualitativa nominal; identificador/código | PK; NOT NULL; AUTO_INCREMENT | — |
-| `name` | `varchar(120)` | Cadena de longitud variable, máximo 120 caracteres; no se declara otro patrón. | Nombre legible del producto o categoría. | Cualitativa nominal; texto descriptivo | UNIQUE; NOT NULL | — |
-| `description` | `text` | Texto de longitud variable; el DDL no fija un límite funcional menor. | Descripción textual complementaria; no se impone formato en el DDL. | Cualitativa nominal; texto descriptivo | NULL | — |
-| `sup_id_category` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Categoría superior opcional; FK autorreferente a tbc_categories.ID. | Cualitativa nominal; identificador/código | FK; NULL; DEFAULT NULL | `tbc_categories`.`ID` |
-| `status` | `bit(1)` | Campo de un bit, con valores 0 o 1; su significado funcional depende de la aplicación. | Indicador binario de estado; el esquema no define el significado funcional de 0 y 1. | Cualitativa nominal; categoría/indicador | NOT NULL; DEFAULT b'1' | — |
-| `creation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de creación del registro. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
-| `last_update` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de última actualización; cuando declara ON UPDATE, MySQL la modifica automáticamente. | Temporal; fecha y hora (escala no asignada) | NOT NULL; ON UPDATE CURRENT_TIMESTAMP | — |
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `int unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `name` | `varchar(120)` | No | UK | — | Nombre visible del producto, categoría o elemento. |
+| `description` | `text` | Sí | — | — | Descripción textual complementaria. |
+| `sup_id_category` | `int unsigned` | Sí | FK | `NULL` | Categoría superior opcional; permite construir la jerarquía de categorías. |
+| `status` | `bit(1)` | No | — | `b'1'` | Indicador binario de estado; su significado exacto depende de la aplicación. |
+| `creation_date` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de creación del registro. |
+| `last_update` | `datetime` | No | — | — | Fecha y hora de la última modificación. |
 
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
 
 - `PRIMARY KEY (`ID`)`
 - `UNIQUE KEY `name` (`name`)`
 - `KEY `fk_superior_category` (`sup_id_category`)`
 - `CONSTRAINT `fk_superior_category` FOREIGN KEY (`sup_id_category`) REFERENCES `tbc_categories` (`ID`)`
 
-### tbc_payment_methods_types
+### `tbc_payment_methods_types`
 
-**Descripción.** Catálogo de tipos de método de pago con código único, descripción, estado y fechas de mantenimiento.
+Catálogo de tipos de métodos de pago admitidos.
 
-**Filas incluidas en SQL:** 0.
+**Filas del respaldo:** 0 · **Columnas:** 6
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `ID` | `int` | Entero INT de 32 bits con signo. | Identificador técnico de la fila. | Cualitativa nominal; identificador/código | PK; NOT NULL; AUTO_INCREMENT | — |
-| `code` | `varchar(30)` | Cadena de longitud variable, máximo 30 caracteres; no se declara otro patrón. | Código textual único del tipo de método de pago. | Cualitativa nominal; identificador/código | UNIQUE; NOT NULL | — |
-| `description` | `text` | Texto de longitud variable; el DDL no fija un límite funcional menor. | Descripción textual complementaria; no se impone formato en el DDL. | Cualitativa nominal; texto descriptivo | NOT NULL | — |
-| `status` | `bit(1)` | Campo de un bit, con valores 0 o 1; su significado funcional depende de la aplicación. | Indicador binario de estado; el esquema no define el significado funcional de 0 y 1. | Cualitativa nominal; categoría/indicador | NOT NULL; DEFAULT b'1' | — |
-| `creation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de creación del registro. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
-| `last_update` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de última actualización; cuando declara ON UPDATE, MySQL la modifica automáticamente. | Temporal; fecha y hora (escala no asignada) | NULL; DEFAULT NULL; ON UPDATE CURRENT_TIMESTAMP | — |
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `int` | No | PK | — | Identificador técnico de la fila. |
+| `code` | `varchar(30)` | No | UK | — | Dato code asociado a tbc payment methods types; descripción inferida del nombre y tipo SQL. |
+| `description` | `text` | No | — | — | Descripción textual complementaria. |
+| `status` | `bit(1)` | No | — | `b'1'` | Indicador binario de estado; su significado exacto depende de la aplicación. |
+| `creation_date` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de creación del registro. |
+| `last_update` | `datetime` | Sí | — | `NULL` | Fecha y hora de la última modificación. |
 
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
 
 - `PRIMARY KEY (`ID`)`
 - `UNIQUE KEY `code` (`code`)`
 
-### tbd_address_components
+### `tbd_address_components`
 
-**Descripción.** Componentes que desglosan una dirección. Una FK vincula con la dirección y otra, compuesta, enlaza opcionalmente el componente padre dentro de la misma dirección.
+Componentes jerárquicos que desglosan una dirección.
 
-**Filas incluidas en SQL:** 0.
+**Filas del respaldo:** 0 · **Columnas:** 8
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `ID` | `bigint unsigned` | Entero BIGINT de 64 bits sin signo (UNSIGNED). | Identificador técnico de la fila. | Cualitativa nominal; identificador/código | PK; UNIQUE; NOT NULL; AUTO_INCREMENT | — |
-| `address_ID` | `bigint unsigned` | Entero BIGINT de 64 bits sin signo (UNSIGNED). | Dirección a la que pertenece el componente; participa en FK a tb_user_addresses y en referencia compuesta al padre. | Cualitativa nominal; identificador/código | UNIQUE; FK; NOT NULL | `tb_user_addresses`.`ID` |
-| `value` | `varchar(255)` | Cadena de longitud variable, máximo 255 caracteres; no se declara otro patrón. | Valor textual del componente de dirección. | Cualitativa nominal; texto descriptivo | NOT NULL | — |
-| `component_type` | `varchar(50)` | Cadena de longitud variable, máximo 50 caracteres; no se declara otro patrón. | Tipo textual de componente; no hay catálogo ENUM en el DDL. | Cualitativa nominal; texto descriptivo | NOT NULL | — |
-| `status` | `bit(1)` | Campo de un bit, con valores 0 o 1; su significado funcional depende de la aplicación. | Indicador binario de estado; el esquema no define el significado funcional de 0 y 1. | Cualitativa nominal; categoría/indicador | NOT NULL; DEFAULT b'1' | — |
-| `address_sup_ID` | `bigint unsigned` | Entero BIGINT de 64 bits sin signo (UNSIGNED). | Componente padre opcional dentro de la misma dirección; participa en FK compuesta a tbd_address_components(address_ID, ID). | Cualitativa nominal; identificador/código | FK; NULL; DEFAULT NULL | `tbd_address_components`.`address_ID`; `tbd_address_components`.`ID` |
-| `creation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de creación del registro. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
-| `last_update` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de última actualización; cuando declara ON UPDATE, MySQL la modifica automáticamente. | Temporal; fecha y hora (escala no asignada) | NULL; DEFAULT NULL; ON UPDATE CURRENT_TIMESTAMP | — |
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `bigint unsigned` | No | PK, UK | — | Identificador técnico de la fila. |
+| `address_ID` | `bigint unsigned` | No | FK, UK | — | Identificador de la dirección asociada. |
+| `value` | `varchar(255)` | No | — | — | Dato value asociado a tbd address components; descripción inferida del nombre y tipo SQL. |
+| `component_type` | `varchar(50)` | No | — | — | Tipo de componente que representa el valor de dirección. |
+| `status` | `bit(1)` | No | — | `b'1'` | Indicador binario de estado; su significado exacto depende de la aplicación. |
+| `address_sup_ID` | `bigint unsigned` | Sí | FK | `NULL` | Componente superior opcional dentro de la misma dirección. |
+| `creation_date` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de creación del registro. |
+| `last_update` | `datetime` | Sí | — | `NULL` | Fecha y hora de la última modificación. |
 
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
 
 - `PRIMARY KEY (`ID`)`
 - `UNIQUE KEY `uk_address_component` (`address_ID`,`ID`)`
@@ -241,49 +485,70 @@ El respaldo contiene 15 tablas físicas, 113 columnas, 20,252 filas en 16 senten
 - `CONSTRAINT `fk_component_address` FOREIGN KEY (`address_ID`) REFERENCES `tb_user_addresses` (`ID`) ON DELETE RESTRICT`
 - `CONSTRAINT `fk_component_parent` FOREIGN KEY (`address_ID`, `address_sup_ID`) REFERENCES `tbd_address_components` (`address_ID`, `ID`) ON DELETE RESTRICT`
 
-### tbd_carts_items
+### `tbd_cancellation_items`
 
-**Descripción.** Líneas de carrito identificadas por carrito, proveedor y producto. quantity debe ser mayor que cero.
+Entidad del modelo relacional.
 
-**Filas incluidas en SQL:** 0.
+**Filas del respaldo:** 0 · **Columnas:** 5
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `cart_ID` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Carrito de la línea; FK a tb_carts.ID y parte de la clave primaria compuesta. | Cualitativa nominal; identificador/código | PK; FK; NOT NULL | `tb_carts`.`ID` |
-| `provider_ID` | `int` | Entero INT de 32 bits con signo. | Usuario proveedor del producto; participa en la FK compuesta de producto-proveedor. | Cualitativa nominal; identificador/código | PK; FK; NOT NULL | `tbd_products_users_providers`.`user_ID` |
-| `product_ID` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Identificador del producto; puede ser FK, parte de PK compuesta o ambas según la tabla. | Cualitativa nominal; identificador/código | PK; FK; NOT NULL | `tbd_products_users_providers`.`product_ID` |
-| `quantity` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Cantidad entera de unidades; CHECK requiere un valor mayor que cero. | Cuantitativa discreta; conteo/valor entero | NOT NULL; DEFAULT '1' | — |
-| `creation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de creación del registro. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `cancellation_ID` | `bigint unsigned` | No | PK, FK | — | Referencia a tb_order_cancellations.ID. |
+| `order_item_ID` | `int unsigned` | No | PK, FK | — | Referencia a tbd_order_items.ID. |
+| `quantity` | `int unsigned` | No | — | — | Cantidad de unidades del producto. |
+| `created_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato created at asociado a tbd cancellation items; descripción inferida del nombre y tipo SQL. |
+| `updated_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato updated at asociado a tbd cancellation items; descripción inferida del nombre y tipo SQL. |
 
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
+
+- `PRIMARY KEY (`cancellation_ID`,`order_item_ID`)`
+- `KEY `idx_cancellation_items_order_item` (`order_item_ID`)`
+- `CONSTRAINT `fk_cancellation_items_cancellation` FOREIGN KEY (`cancellation_ID`) REFERENCES `tb_order_cancellations` (`ID`)`
+- `CONSTRAINT `fk_cancellation_items_order_item` FOREIGN KEY (`order_item_ID`) REFERENCES `tbd_order_items` (`ID`)`
+- `CONSTRAINT `chk_cancellation_items_quantity` CHECK ((`quantity` > 0))`
+
+### `tbd_cart_items`
+
+Entidad del modelo relacional.
+
+**Filas del respaldo:** 0 · **Columnas:** 6
+
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `cart_ID` | `int unsigned` | No | PK, FK | — | Identificador del carrito asociado. |
+| `provider_ID` | `int` | No | PK, FK | — | Identificador del usuario proveedor. |
+| `product_ID` | `int unsigned` | No | PK, FK | — | Identificador del producto asociado. |
+| `quantity` | `int unsigned` | No | — | `'1'` | Cantidad de unidades del producto. |
+| `created_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato created at asociado a tbd cart items; descripción inferida del nombre y tipo SQL. |
+| `updated_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato updated at asociado a tbd cart items; descripción inferida del nombre y tipo SQL. |
+
+**Índices y restricciones**
 
 - `PRIMARY KEY (`cart_ID`,`provider_ID`,`product_ID`)`
-- `KEY `provider_ID` (`provider_ID`)`
-- `KEY `product_ID` (`product_ID`)`
-- `CONSTRAINT `tbd_carts_items_ibfk_1` FOREIGN KEY (`cart_ID`) REFERENCES `tb_carts` (`ID`)`
-- `CONSTRAINT `tbd_carts_items_ibfk_2` FOREIGN KEY (`provider_ID`) REFERENCES `tbd_products_users_providers` (`user_ID`)`
-- `CONSTRAINT `tbd_carts_items_ibfk_3` FOREIGN KEY (`product_ID`) REFERENCES `tbd_products_users_providers` (`product_ID`)`
-- `CONSTRAINT `chk_cart_quantity` CHECK ((`quantity` > 0))`
+- `KEY `idx_cart_items_provider_product` (`provider_ID`,`product_ID`)`
+- `CONSTRAINT `fk_cart_items_cart` FOREIGN KEY (`cart_ID`) REFERENCES `tb_carts` (`ID`)`
+- `CONSTRAINT `fk_cart_items_provider_product` FOREIGN KEY (`provider_ID`, `product_ID`) REFERENCES `tbd_products_users_providers` (`user_ID`, `product_ID`)`
+- `CONSTRAINT `chk_cart_items_quantity` CHECK ((`quantity` > 0))`
 
-### tbd_order_items
+### `tbd_order_items`
 
-**Descripción.** Líneas históricas de pedido con producto/proveedor, nombre copiado, cantidad y precio unitario. subtotal es una columna generada almacenada como cantidad por precio.
+Detalle histórico de productos, cantidades y precios por pedido.
 
-**Filas incluidas en SQL:** 0.
+**Filas del respaldo:** 0 · **Columnas:** 9
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `ID` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Identificador técnico de la fila. | Cualitativa nominal; identificador/código | PK; NOT NULL; AUTO_INCREMENT | — |
-| `seller_order_ID` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Pedido al que pertenece la línea; FK a tb_buyer_orders.ID. | Cualitativa nominal; identificador/código | FK; NOT NULL | `tb_buyer_orders`.`ID` |
-| `product_ID` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Identificador del producto; puede ser FK, parte de PK compuesta o ambas según la tabla. | Cualitativa nominal; identificador/código | FK; NOT NULL | `tbd_products_users_providers`.`product_ID` |
-| `provider_ID` | `int` | Entero INT de 32 bits con signo. | Usuario proveedor del producto; participa en la FK compuesta de producto-proveedor. | Cualitativa nominal; identificador/código | FK; NOT NULL | `tbd_products_users_providers`.`user_ID` |
-| `product_name` | `varchar(255)` | Cadena de longitud variable, máximo 255 caracteres; no se declara otro patrón. | Nombre del producto guardado como instantánea en la línea; no es FK. | Cualitativa nominal; texto descriptivo | NOT NULL | — |
-| `quantity` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Cantidad entera de unidades; CHECK requiere un valor mayor que cero. | Cuantitativa discreta; conteo/valor entero | NOT NULL | — |
-| `unit_price` | `decimal(12,2)` | Decimal exacto DECIMAL(12,2): hasta 10 dígitos enteros y 2 decimales. | Precio unitario monetario de la línea; CHECK exige valor no negativo. | Cuantitativa continua; importe | NOT NULL | — |
-| `subtotal` | `decimal(12,2)` | Decimal exacto DECIMAL(12,2): hasta 10 dígitos enteros y 2 decimales. | Importe subtotal del pedido; CHECK requiere valor no negativo. | Cuantitativa continua; importe | NULL; GENERATED ALWAYS AS ((`quantity` * `unit_price`)) STORED | — |
-| `creation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de creación del registro. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `int unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `seller_order_ID` | `int unsigned` | No | FK | — | Identificador del pedido de venta asociado. |
+| `product_ID` | `int unsigned` | No | FK | — | Identificador del producto asociado. |
+| `provider_ID` | `int` | No | FK | — | Identificador del usuario proveedor. |
+| `product_name` | `varchar(255)` | No | — | — | Dato product name asociado a tbd order items; descripción inferida del nombre y tipo SQL. |
+| `quantity` | `int unsigned` | No | — | — | Cantidad de unidades del producto. |
+| `unit_price` | `decimal(12,2)` | No | — | — | Precio unitario aplicado en la operación. |
+| `subtotal` | `decimal(12,2)` | Sí | — | — | Importe subtotal calculado o almacenado para la operación. |
+| `creation_date` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de creación del registro. |
 
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
 
 - `PRIMARY KEY (`ID`)`
 - `KEY `seller_order_ID` (`seller_order_ID`)`
@@ -295,21 +560,21 @@ El respaldo contiene 15 tablas físicas, 113 columnas, 20,252 filas en 16 senten
 - `CONSTRAINT `tbd_order_items_chk_1` CHECK ((`quantity` > 0))`
 - `CONSTRAINT `tbd_order_items_chk_2` CHECK ((`unit_price` >= 0))`
 
-### tbd_products_categories
+### `tbd_products_categories`
 
-**Descripción.** Tabla puente entre productos y categorías. Su clave primaria compuesta impide duplicar una pareja producto-categoría.
+Tabla puente entre productos y categorías.
 
-**Filas incluidas en SQL:** 4,998.
+**Filas del respaldo:** 15,000 · **Columnas:** 5
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `product_ID` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Identificador del producto; puede ser FK, parte de PK compuesta o ambas según la tabla. | Cualitativa nominal; identificador/código | PK; FK; NOT NULL | `tb_products`.`ID` |
-| `categories_ID` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Identificador de categoría; FK y parte de la PK de la tabla puente. | Cualitativa nominal; identificador/código | PK; FK; NOT NULL | `tbc_categories`.`ID` |
-| `status` | `bit(1)` | Campo de un bit, con valores 0 o 1; su significado funcional depende de la aplicación. | Indicador binario de estado; el esquema no define el significado funcional de 0 y 1. | Cualitativa nominal; categoría/indicador | NOT NULL; DEFAULT b'1' | — |
-| `creation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de creación del registro. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
-| `last_update` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de última actualización; cuando declara ON UPDATE, MySQL la modifica automáticamente. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP; ON UPDATE CURRENT_TIMESTAMP | — |
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `product_ID` | `int unsigned` | No | PK, FK | — | Identificador del producto asociado. |
+| `categories_ID` | `int unsigned` | No | PK, FK | — | Identificador de la categoría asociada. |
+| `status` | `bit(1)` | No | — | `b'1'` | Indicador binario de estado; su significado exacto depende de la aplicación. |
+| `creation_date` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de creación del registro. |
+| `last_update` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de la última modificación. |
 
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
 
 - `PRIMARY KEY (`product_ID`,`categories_ID`)`
 - `KEY `fk_tbd_pc_category` (`categories_ID`)`
@@ -317,50 +582,73 @@ El respaldo contiene 15 tablas físicas, 113 columnas, 20,252 filas en 16 senten
 - `CONSTRAINT `fk_tbd_pc_category` FOREIGN KEY (`categories_ID`) REFERENCES `tbc_categories` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE`
 - `CONSTRAINT `fk_tbd_pc_product` FOREIGN KEY (`product_ID`) REFERENCES `tb_products` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE`
 
-### tbd_products_users_providers
+### `tbd_products_users_providers`
 
-**Descripción.** Tabla puente que registra la relación de un usuario con un producto como titular, revendedor o distribuidor, junto con disponibilidad y estado.
+Relación de productos con usuarios proveedores o distribuidores.
 
-**Filas incluidas en SQL:** 0.
+**Filas del respaldo:** 0 · **Columnas:** 7
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `user_ID` | `int` | Entero INT de 32 bits con signo. | Identificador de usuario; según la tabla es FK, parte de PK o clave UNIQUE. | Cualitativa nominal; identificador/código | PK; FK; NOT NULL | `tb_users`.`ID` |
-| `product_ID` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Identificador del producto; puede ser FK, parte de PK compuesta o ambas según la tabla. | Cualitativa nominal; identificador/código | PK; FK; NOT NULL | `tb_products`.`ID` |
-| `type_ownership` | `enum('Owner','Reseller','Distributor')` | Valores textuales cerrados: Owner, Reseller, Distributor. | Tipo de relación permitido por ENUM: Owner, Reseller o Distributor. | Cualitativa nominal; categoría/indicador | NULL; DEFAULT NULL | — |
-| `status` | `bit(1)` | Campo de un bit, con valores 0 o 1; su significado funcional depende de la aplicación. | Indicador binario de estado; el esquema no define el significado funcional de 0 y 1. | Cualitativa nominal; categoría/indicador | NOT NULL; DEFAULT b'1' | — |
-| `available_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora desde la que se declara disponible la relación usuario-producto. | Temporal; fecha y hora (escala no asignada) | NOT NULL | — |
-| `creation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de creación del registro. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
-| `last_update` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de última actualización; cuando declara ON UPDATE, MySQL la modifica automáticamente. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP; ON UPDATE CURRENT_TIMESTAMP | — |
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `user_ID` | `int` | No | PK, FK | — | Identificador del usuario asociado. |
+| `product_ID` | `int unsigned` | No | PK, FK | — | Identificador del producto asociado. |
+| `type_ownership` | `enum('Owner','Reseller','Distributor')` | Sí | — | `NULL` | Rol del usuario con respecto al producto. Valores: `Owner`, `Reseller`, `Distributor`. |
+| `status` | `bit(1)` | No | — | `b'1'` | Indicador binario de estado; su significado exacto depende de la aplicación. |
+| `available_date` | `datetime` | No | — | — | Fecha desde la que se declara disponible la relación producto-proveedor. |
+| `creation_date` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de creación del registro. |
+| `last_update` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de la última modificación. |
 
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
 
 - `PRIMARY KEY (`user_ID`,`product_ID`)`
 - `KEY `fk_products2` (`product_ID`)`
 - `CONSTRAINT `fk_products2` FOREIGN KEY (`product_ID`) REFERENCES `tb_products` (`ID`)`
 - `CONSTRAINT `fk_user1` FOREIGN KEY (`user_ID`) REFERENCES `tb_users` (`ID`)`
 
-### tbd_user_payment_methods
+### `tbd_return_items`
 
-**Descripción.** Métodos de pago asociados a usuarios y a un tipo del catálogo. El par proveedor/referencia externa es único.
+Entidad del modelo relacional.
 
-**Filas incluidas en SQL:** 0.
+**Filas del respaldo:** 0 · **Columnas:** 6
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `ID` | `bigint unsigned` | Entero BIGINT de 64 bits sin signo (UNSIGNED). | Identificador técnico de la fila. | Cualitativa nominal; identificador/código | PK; NOT NULL; AUTO_INCREMENT | — |
-| `user_ID` | `int` | Entero INT de 32 bits con signo. | Identificador de usuario; según la tabla es FK, parte de PK o clave UNIQUE. | Cualitativa nominal; identificador/código | FK; NOT NULL | `tb_users`.`ID` |
-| `payment_method_type_ID` | `int` | Entero INT de 32 bits con signo. | Tipo de método de pago; FK a tbc_payment_methods_types.ID. | Cualitativa nominal; identificador/código | FK; NOT NULL | `tbc_payment_methods_types`.`ID` |
-| `provider` | `varchar(60)` | Cadena de longitud variable, máximo 60 caracteres; no se declara otro patrón. | Identificador textual del proveedor externo. | Cualitativa nominal; texto descriptivo | UNIQUE; NOT NULL | — |
-| `provider_method_ref` | `varchar(255)` | Cadena de longitud variable, máximo 255 caracteres; no se declara otro patrón. | Referencia externa del método; junto con provider está sujeta a UNIQUE. | Cualitativa nominal; identificador/código | UNIQUE; NOT NULL | — |
-| `label` | `varchar(100)` | Cadena de longitud variable, máximo 100 caracteres; no se declara otro patrón. | Etiqueta opcional para mostrar o reconocer el método de pago. | Cualitativa nominal; texto descriptivo | NULL; DEFAULT NULL | — |
-| `last_four` | `char(4)` | Cadena de longitud fija de 4 caracteres. | Últimos cuatro caracteres del identificador de pago, en formato textual. | Cualitativa nominal; identificador/código | NULL; DEFAULT NULL | — |
-| `is_default` | `tinyint(1)` | Entero de 8 bits declarado tinyint(1); no es un booleano estricto. | Indicador numérico 0/1 de dirección o método predeterminado; tinyint(1) no constituye por sí solo una restricción booleana. | Cualitativa nominal; categoría/indicador | NOT NULL; DEFAULT '0' | — |
-| `status` | `bit(1)` | Campo de un bit, con valores 0 o 1; su significado funcional depende de la aplicación. | Indicador binario de estado; el esquema no define el significado funcional de 0 y 1. | Cualitativa nominal; categoría/indicador | NOT NULL; DEFAULT b'1' | — |
-| `creation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de creación del registro. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
-| `last_update` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de última actualización; cuando declara ON UPDATE, MySQL la modifica automáticamente. | Temporal; fecha y hora (escala no asignada) | NULL; DEFAULT NULL; ON UPDATE CURRENT_TIMESTAMP | — |
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `return_ID` | `bigint unsigned` | No | PK, FK | — | Referencia a tb_returns.ID. |
+| `order_item_ID` | `int unsigned` | No | PK, FK | — | Referencia a tbd_order_items.ID. |
+| `quantity` | `int unsigned` | No | — | — | Cantidad de unidades del producto. |
+| `condition_note` | `varchar(500)` | Sí | — | `NULL` | Dato condition note asociado a tbd return items; descripción inferida del nombre y tipo SQL. |
+| `created_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato created at asociado a tbd return items; descripción inferida del nombre y tipo SQL. |
+| `updated_at` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Dato updated at asociado a tbd return items; descripción inferida del nombre y tipo SQL. |
 
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
+
+- `PRIMARY KEY (`return_ID`,`order_item_ID`)`
+- `KEY `idx_return_items_order_item` (`order_item_ID`)`
+- `CONSTRAINT `fk_return_items_order_item` FOREIGN KEY (`order_item_ID`) REFERENCES `tbd_order_items` (`ID`)`
+- `CONSTRAINT `fk_return_items_return` FOREIGN KEY (`return_ID`) REFERENCES `tb_returns` (`ID`)`
+- `CONSTRAINT `chk_return_items_quantity` CHECK ((`quantity` > 0))`
+
+### `tbd_user_payment_methods`
+
+Métodos de pago registrados para los usuarios.
+
+**Filas del respaldo:** 0 · **Columnas:** 11
+
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `ID` | `bigint unsigned` | No | PK | — | Identificador técnico de la fila. |
+| `user_ID` | `int` | No | FK | — | Identificador del usuario asociado. |
+| `payment_method_type_ID` | `int` | No | FK | — | Identificador del tipo de método de pago. |
+| `provider` | `varchar(60)` | No | UK | — | Proveedor o procesador externo del método de pago. |
+| `provider_method_ref` | `varchar(255)` | No | UK | — | Referencia externa del método en el proveedor de pagos. |
+| `label` | `varchar(100)` | Sí | — | `NULL` | Dato label asociado a tbd user payment methods; descripción inferida del nombre y tipo SQL. |
+| `last_four` | `char(4)` | Sí | — | `NULL` | Últimos cuatro dígitos del medio de pago. |
+| `is_default` | `tinyint(1)` | No | — | `'0'` | Indicador de selección predeterminada. |
+| `status` | `bit(1)` | No | — | `b'1'` | Indicador binario de estado; su significado exacto depende de la aplicación. |
+| `creation_date` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de creación del registro. |
+| `last_update` | `datetime` | Sí | — | `NULL` | Fecha y hora de la última modificación. |
+
+**Índices y restricciones**
 
 - `PRIMARY KEY (`ID`)`
 - `UNIQUE KEY `uk_provider_method` (`provider`,`provider_method_ref`)`
@@ -369,76 +657,73 @@ El respaldo contiene 15 tablas físicas, 113 columnas, 20,252 filas en 16 senten
 - `CONSTRAINT `tbd_user_payment_methods_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `tb_users` (`ID`)`
 - `CONSTRAINT `tbd_user_payment_methods_ibfk_2` FOREIGN KEY (`payment_method_type_ID`) REFERENCES `tbc_payment_methods_types` (`ID`)`
 
-### tbd_users_wishlist_products
+### `tbd_users_wishlist_products`
 
-**Descripción.** Tabla puente de productos guardados por usuarios en listas de deseos, con estado y fechas.
+Productos guardados por usuarios en listas de deseos.
 
-**Filas incluidas en SQL:** 0.
+**Filas del respaldo:** 0 · **Columnas:** 5
 
-| Columna | Tipo SQL | Composición | Descripción | Clasificación | Restricciones | Referencia |
-|---|---|---|---|---|---|---|
-| `user_ID` | `int` | Entero INT de 32 bits con signo. | Identificador de usuario; según la tabla es FK, parte de PK o clave UNIQUE. | Cualitativa nominal; identificador/código | PK; FK; NOT NULL | `tb_users`.`ID` |
-| `product_ID` | `int unsigned` | Entero INT de 32 bits sin signo (UNSIGNED). | Identificador del producto; puede ser FK, parte de PK compuesta o ambas según la tabla. | Cualitativa nominal; identificador/código | PK; FK; NOT NULL | `tb_products`.`ID` |
-| `status` | `bit(1)` | Campo de un bit, con valores 0 o 1; su significado funcional depende de la aplicación. | Indicador binario de estado; el esquema no define el significado funcional de 0 y 1. | Cualitativa nominal; categoría/indicador | NOT NULL; DEFAULT b'1' | — |
-| `creation_date` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de creación del registro. | Temporal; fecha y hora (escala no asignada) | NOT NULL; DEFAULT CURRENT_TIMESTAMP | — |
-| `last_update` | `datetime` | Fecha y hora SQL (YYYY-MM-DD HH:MM:SS); no almacena zona horaria. | Fecha y hora de última actualización; cuando declara ON UPDATE, MySQL la modifica automáticamente. | Temporal; fecha y hora (escala no asignada) | NOT NULL; ON UPDATE CURRENT_TIMESTAMP | — |
+| Columna | Tipo SQL | Nulo | Llaves | Predeterminado | Descripción |
+|---|---|---|---|---|---|
+| `user_ID` | `int` | No | PK, FK | — | Identificador del usuario asociado. |
+| `product_ID` | `int unsigned` | No | PK, FK | — | Identificador del producto asociado. |
+| `status` | `bit(1)` | No | — | `b'1'` | Indicador binario de estado; su significado exacto depende de la aplicación. |
+| `creation_date` | `datetime` | No | — | `CURRENT_TIMESTAMP` | Fecha y hora de creación del registro. |
+| `last_update` | `datetime` | No | — | — | Fecha y hora de la última modificación. |
 
-**Restricciones e índices de tabla (DDL):**
+**Índices y restricciones**
 
 - `PRIMARY KEY (`user_ID`,`product_ID`)`
 - `KEY `fk_products3` (`product_ID`)`
 - `CONSTRAINT `fk_products3` FOREIGN KEY (`product_ID`) REFERENCES `tb_products` (`ID`)`
 - `CONSTRAINT `fk_user2` FOREIGN KEY (`user_ID`) REFERENCES `tb_users` (`ID`)`
 
-## Relaciones entre tablas
+## Relaciones
 
-| Estado | Nombre FK | Origen | Destino | Cardinalidad | Reglas |
-|---|---|---|---|---|---|
-| Declarada en DDL | `tb_buyer_orders_ibfk_1` | `tb_buyer_orders.seller_ID` | `tb_users.ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `tb_carts_ibfk_1` | `tb_carts.user_ID` | `tb_users.ID` | 1:1 (FK UNIQUE) | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `fk_addresses_users` | `tb_user_addresses.user_ID` | `tb_users.ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `fk_superior_category` | `tbc_categories.sup_id_category` | `tbc_categories.ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `fk_component_address` | `tbd_address_components.address_ID` | `tb_user_addresses.ID` | N:1 desde origen; 1:N desde destino | ON DELETE RESTRICT |
-| Declarada en DDL | `fk_component_parent` | `tbd_address_components.address_ID,address_sup_ID` | `tbd_address_components.address_ID,ID` | N:1 desde origen; 1:N desde destino | ON DELETE RESTRICT |
-| Declarada en DDL | `tbd_carts_items_ibfk_1` | `tbd_carts_items.cart_ID` | `tb_carts.ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `tbd_carts_items_ibfk_2` | `tbd_carts_items.provider_ID` | `tbd_products_users_providers.user_ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `tbd_carts_items_ibfk_3` | `tbd_carts_items.product_ID` | `tbd_products_users_providers.product_ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `tbd_order_items_ibfk_1` | `tbd_order_items.seller_order_ID` | `tb_buyer_orders.ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `tbd_order_items_ibfk_2` | `tbd_order_items.product_ID` | `tbd_products_users_providers.product_ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `tbd_order_items_ibfk_3` | `tbd_order_items.provider_ID` | `tbd_products_users_providers.user_ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `fk_tbd_pc_category` | `tbd_products_categories.categories_ID` | `tbc_categories.ID` | N:1 desde origen; 1:N desde destino | ON DELETE CASCADE ON UPDATE CASCADE |
-| Declarada en DDL | `fk_tbd_pc_product` | `tbd_products_categories.product_ID` | `tb_products.ID` | N:1 desde origen; 1:N desde destino | ON DELETE CASCADE ON UPDATE CASCADE |
-| Declarada en DDL | `fk_products2` | `tbd_products_users_providers.product_ID` | `tb_products.ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `fk_user1` | `tbd_products_users_providers.user_ID` | `tb_users.ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `tbd_user_payment_methods_ibfk_1` | `tbd_user_payment_methods.user_ID` | `tb_users.ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `tbd_user_payment_methods_ibfk_2` | `tbd_user_payment_methods.payment_method_type_ID` | `tbc_payment_methods_types.ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `fk_products3` | `tbd_users_wishlist_products.product_ID` | `tb_products.ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Declarada en DDL | `fk_user2` | `tbd_users_wishlist_products.user_ID` | `tb_users.ID` | N:1 desde origen; 1:N desde destino | ON DELETE/UPDATE no indicado explícitamente (InnoDB aplica RESTRICT/NO ACTION por defecto). |
-| Inferida; no FK | `inferida_product_id` | `tb_logs.product_id` | `tb_products.ID` | Candidata N:1; sin integridad FK | Sin FOREIGN KEY; inferencia por nombre y semántica de trazabilidad. Pendiente de validar. |
+Las relaciones declaradas se derivan de FOREIGN KEY y se muestran desde la tabla que contiene la llave (N:1 hacia la tabla referenciada).
 
-Las tablas puente forman relaciones muchos a muchos: productos-categorías, usuarios-productos/proveedores, usuarios-lista de deseos y carrito-producto-proveedor. `tbd_address_components` contiene una jerarquía autorreferente limitada a la misma dirección. La FK compuesta para líneas de carrito/pedido relaciona `provider_ID` y `product_ID` por separado en el DDL; la integridad efectiva depende de ambas restricciones y de las claves referenciadas.
+- **FK declarada:** `tb_buyer_orders.seller_ID` → `tb_users.ID`.
+- **FK declarada:** `tb_carts.user_ID` → `tb_users.ID`.
+- **FK declarada:** `tb_order_cancellations.order_ID` → `tb_orders.ID`.
+- **FK declarada:** `tb_order_cancellations.requested_by` → `tb_users.ID`.
+- **FK declarada:** `tb_orders.shipping_address_ID` → `tb_user_addresses.ID`.
+- **FK declarada:** `tb_orders.buyer_ID` → `tb_users.ID`.
+- **FK declarada:** `tb_payment_transaction.payment_ID` → `tb_payments.ID`.
+- **FK declarada:** `tb_payments.payment_method_ID` → `tb_payment_methods.ID`.
+- **FK declarada:** `tb_payments.order_ID` → `tb_orders.ID`.
+- **FK declarada:** `tb_people.user_ID` → `tb_users.ID`.
+- **FK declarada:** `tb_refunds.payment_ID` → `tb_payments.ID`.
+- **FK declarada:** `tb_refunds.return_ID` → `tb_returns.ID`.
+- **FK declarada:** `tb_returns.order_ID` → `tb_orders.ID`.
+- **FK declarada:** `tb_returns.requested_by` → `tb_users.ID`.
+- **FK declarada:** `tb_shipments.order_ID` → `tb_orders.ID`.
+- **FK declarada:** `tb_user_addresses.user_ID` → `tb_users.ID`.
+- **FK declarada:** `tbc_categories.sup_id_category` → `tbc_categories.ID`.
+- **FK declarada:** `tbd_address_components.address_ID` → `tb_user_addresses.ID`.
+- **FK declarada:** `tbd_address_components.address_ID, address_sup_ID` → `tbd_address_components.address_ID, ID`.
+- **FK declarada:** `tbd_cancellation_items.cancellation_ID` → `tb_order_cancellations.ID`.
+- **FK declarada:** `tbd_cancellation_items.order_item_ID` → `tbd_order_items.ID`.
+- **FK declarada:** `tbd_cart_items.cart_ID` → `tb_carts.ID`.
+- **FK declarada:** `tbd_cart_items.provider_ID, product_ID` → `tbd_products_users_providers.user_ID, product_ID`.
+- **FK declarada:** `tbd_order_items.seller_order_ID` → `tb_buyer_orders.ID`.
+- **FK declarada:** `tbd_order_items.product_ID` → `tbd_products_users_providers.product_ID`.
+- **FK declarada:** `tbd_order_items.provider_ID` → `tbd_products_users_providers.user_ID`.
+- **FK declarada:** `tbd_products_categories.categories_ID` → `tbc_categories.ID`.
+- **FK declarada:** `tbd_products_categories.product_ID` → `tb_products.ID`.
+- **FK declarada:** `tbd_products_users_providers.product_ID` → `tb_products.ID`.
+- **FK declarada:** `tbd_products_users_providers.user_ID` → `tb_users.ID`.
+- **FK declarada:** `tbd_return_items.order_item_ID` → `tbd_order_items.ID`.
+- **FK declarada:** `tbd_return_items.return_ID` → `tb_returns.ID`.
+- **FK declarada:** `tbd_user_payment_methods.user_ID` → `tb_users.ID`.
+- **FK declarada:** `tbd_user_payment_methods.payment_method_type_ID` → `tbc_payment_methods_types.ID`.
+- **FK declarada:** `tbd_users_wishlist_products.product_ID` → `tb_products.ID`.
+- **FK declarada:** `tbd_users_wishlist_products.user_ID` → `tb_users.ID`.
+- **Inferida; no es FK física:** `tb_logs.product_id` → `tb_products.ID`.
 
-## Vistas
+## Objetos del respaldo
 
-Las vistas no tienen filas INSERT propias en el respaldo; su resultado depende de la consulta al ejecutarlas.
+- Vistas (25): `vw_total_products_by_category`, `vw_trazabilidad_address_components`, `vw_trazabilidad_cancellation_items`, `vw_trazabilidad_cart_items`, `vw_trazabilidad_carts`, `vw_trazabilidad_categorias`, `vw_trazabilidad_categorizacion_productos`, `vw_trazabilidad_order_cancellations`, `vw_trazabilidad_order_items`, `vw_trazabilidad_orders`, `vw_trazabilidad_payment_methods`, `vw_trazabilidad_payment_methods_types`, `vw_trazabilidad_payment_transaction`, `vw_trazabilidad_payments`, `vw_trazabilidad_people`, `vw_trazabilidad_productos`, `vw_trazabilidad_products_users_providers`, `vw_trazabilidad_refunds`, `vw_trazabilidad_return_items`, `vw_trazabilidad_returns`, `vw_trazabilidad_shipments`, `vw_trazabilidad_user_addresses`, `vw_trazabilidad_user_payment_methods`, `vw_trazabilidad_users_wishlist_products`, `vw_trazabilidad_usuarios`
+- Procedimientos (3): `sp_reactivar_product`, `sp_register_new_user`, `sp_retiro_product`
+- Triggers: 72
 
-- `vw_total_products_by_category`
-- `vw_trazabilidad_categorias`
-- `vw_trazabilidad_categorizacion_productos`
-- `vw_trazabilidad_productos`
-- `vw_trazabilidad_usuarios`
-
-## Procedimientos y triggers
-
-**Procedimientos:** `sp_reactivar_product`, `sp_retiro_product`
-
-**Triggers:** `trg_address_components_after_delete`, `trg_address_components_after_insert`, `trg_address_components_after_update`, `trg_buyer_orders_after_delete`, `trg_buyer_orders_after_insert`, `trg_buyer_orders_after_update`, `trg_carts_after_delete`, `trg_carts_after_insert`, `trg_carts_after_update`, `trg_carts_items_after_delete`, `trg_carts_items_after_insert`, `trg_carts_items_after_update`, `trg_categories_after_delete`, `trg_categories_after_insert`, `trg_categories_after_update`, `trg_order_items_after_delete`, `trg_order_items_after_insert`, `trg_order_items_after_update`, `trg_payment_methods_types_after_delete`, `trg_payment_methods_types_after_insert`, `trg_payment_methods_types_after_update`, `trg_products_after_delete`, `trg_products_after_insert`, `trg_products_after_update`, `trg_products_categories_after_delete`, `trg_products_categories_after_insert`, `trg_products_categories_after_update`, `trg_user_addresses_after_delete`, `trg_user_addresses_after_insert`, `trg_user_addresses_after_update`, `trg_user_payment_methods_after_delete`, `trg_user_payment_methods_after_insert`, `trg_user_payment_methods_after_update`, `trg_users_after_delete`, `trg_users_after_insert`, `trg_users_after_update`, `trg_users_wishlist_products_after_delete`, `trg_users_wishlist_products_after_insert`, `trg_users_wishlist_products_after_update`
-
-## Criterios y límites
-
-- Los conteos se obtuvieron contando tuplas INSERT del archivo SQL y se refieren exclusivamente al respaldo.
-- `NULL`, `DEFAULT`, `AUTO_INCREMENT`, índices y restricciones se copiaron del DDL. Las restricciones CHECK y los índices completos se listan por tabla.
-- La clasificación cualitativa/cuantitativa describe el uso semántico inferido; identificadores numéricos se clasifican como cualitativos nominales.
-- Los campos sin descripción explícita en el DDL se interpretan por su nombre. Las referencias no declaradas se identifican como inferencias.
-- Las vistas no tienen un total de registros estático dentro del respaldo.
-- Los ejemplos son esquemáticos, no datos del respaldo; se omite el contenido de `password`.
+**Validación del análisis:** 69 sentencias INSERT; 128,893 filas contabilizadas y asociadas a tablas del respaldo.
