@@ -1,0 +1,204 @@
+﻿Tabla,Columna,Tipo SQL,Nulo,Llaves,Predeterminado,Descripción,Filas respaldo
+tb_buyer_orders,ID,int unsigned,False,PK,,Identificador técnico de la fila.,0
+tb_buyer_orders,seller_ID,int,False,FK,,Identificador del usuario vendedor.,0
+tb_buyer_orders,subtotal,"decimal(12,2)",False,—,'0.00',Importe subtotal calculado o almacenado para la operación.,0
+tb_buyer_orders,shipping_cost,"decimal(12,2)",False,—,'0.00',Importe del costo de envío.,0
+tb_buyer_orders,fulfillment_status,"enum('Pending','Accepted','Preparing','Sent','Delivered','Canceled','Returned')",False,—,'Pending',Etapa de preparación y entrega del pedido.,0
+tb_buyer_orders,status,bit(1),False,—,b'1',Indicador binario de estado; su significado exacto depende de la aplicación.,0
+tb_buyer_orders,creation_date,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de creación del registro.,0
+tb_buyer_orders,last_update,datetime,True,—,NULL,Fecha y hora de la última modificación.,0
+tb_carts,ID,int unsigned,False,PK,,Identificador técnico de la fila.,0
+tb_carts,user_ID,int,False,"FK, UK",,Identificador del usuario asociado.,0
+tb_carts,status,bit(1),True,—,b'1',Indicador binario de estado; su significado exacto depende de la aplicación.,0
+tb_carts,creation_date,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de creación del registro.,0
+tb_carts,last_update,datetime,True,—,NULL,Fecha y hora de la última modificación.,0
+tb_logs,ID,int,False,PK,,Identificador técnico de la fila.,91770
+tb_logs,table_name,varchar(80),False,—,,Entidad o tabla afectada por el evento auditado.,91770
+tb_logs,table_operation,"enum('Create','Read','Update','Delete')",True,—,NULL,Tipo de operación registrada en la bitácora.,91770
+tb_logs,db_user,varchar(80),False,—,,Usuario de base de datos consignado como actor.,91770
+tb_logs,operation_date,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora en que se registró el evento.,91770
+tb_logs,operation_description,text,False,—,,Descripción del evento de auditoría.,91770
+tb_logs,operation_status,bit(1),True,—,b'1',Indicador binario del resultado registrado.,91770
+tb_logs,product_id,int unsigned,True,—,NULL,Identificador relacionado con el evento; el respaldo no declara una FK para este campo.,91770
+tb_order_cancellations,ID,bigint unsigned,False,PK,,Identificador técnico de la fila.,0
+tb_order_cancellations,order_ID,int unsigned,False,FK,,Referencia a tb_orders.ID.,0
+tb_order_cancellations,requested_by,int,False,FK,,Referencia a tb_users.ID.,0
+tb_order_cancellations,reason,varchar(500),False,—,,Dato reason asociado a tb order cancellations; descripción inferida del nombre y tipo SQL.,0
+tb_order_cancellations,cancellation_status,"enum('Requested','Approved','Rejected','Completed')",False,—,'Requested',Dato cancellation status asociado a tb order cancellations; descripción inferida del nombre y tipo SQL.,0
+tb_order_cancellations,created_at,datetime,False,—,CURRENT_TIMESTAMP,Dato created at asociado a tb order cancellations; descripción inferida del nombre y tipo SQL.,0
+tb_order_cancellations,updated_at,datetime,False,—,CURRENT_TIMESTAMP,Dato updated at asociado a tb order cancellations; descripción inferida del nombre y tipo SQL.,0
+tb_orders,ID,int unsigned,False,PK,,Identificador técnico de la fila.,0
+tb_orders,buyer_ID,int,False,FK,,Referencia a tb_users.ID.,0
+tb_orders,shipping_address_ID,bigint unsigned,True,FK,NULL,Referencia a tb_user_addresses.ID.,0
+tb_orders,subtotal,"decimal(12,2)",False,—,'0.00',Importe subtotal calculado o almacenado para la operación.,0
+tb_orders,shipping_cost,"decimal(12,2)",False,—,'0.00',Importe del costo de envío.,0
+tb_orders,order_status,"enum('Pending','Paid','Processing','Shipped','Delivered','Canceled','Returned')",False,—,'Pending',Dato order status asociado a tb orders; descripción inferida del nombre y tipo SQL.,0
+tb_orders,created_at,datetime,False,—,CURRENT_TIMESTAMP,Dato created at asociado a tb orders; descripción inferida del nombre y tipo SQL.,0
+tb_orders,updated_at,datetime,False,—,CURRENT_TIMESTAMP,Dato updated at asociado a tb orders; descripción inferida del nombre y tipo SQL.,0
+tb_payment_methods,ID,int unsigned,False,PK,,Identificador técnico de la fila.,0
+tb_payment_methods,code,varchar(40),False,UK,,Dato code asociado a tb payment methods; descripción inferida del nombre y tipo SQL.,0
+tb_payment_methods,name,varchar(100),False,—,,"Nombre visible del producto, categoría o elemento.",0
+tb_payment_methods,description,varchar(500),True,—,NULL,Descripción textual complementaria.,0
+tb_payment_methods,is_active,tinyint(1),False,—,'1',Dato is active asociado a tb payment methods; descripción inferida del nombre y tipo SQL.,0
+tb_payment_methods,created_at,datetime,False,—,CURRENT_TIMESTAMP,Dato created at asociado a tb payment methods; descripción inferida del nombre y tipo SQL.,0
+tb_payment_methods,updated_at,datetime,False,—,CURRENT_TIMESTAMP,Dato updated at asociado a tb payment methods; descripción inferida del nombre y tipo SQL.,0
+tb_payment_transaction,ID,bigint unsigned,False,PK,,Identificador técnico de la fila.,0
+tb_payment_transaction,payment_ID,bigint unsigned,False,FK,,Referencia a tb_payments.ID.,0
+tb_payment_transaction,transaction_ref,varchar(150),False,UK,,Dato transaction ref asociado a tb payment transaction; descripción inferida del nombre y tipo SQL.,0
+tb_payment_transaction,transaction_type,"enum('Authorize','Capture','Void','Charge','Refund')",False,—,,Dato transaction type asociado a tb payment transaction; descripción inferida del nombre y tipo SQL.,0
+tb_payment_transaction,transaction_status,"enum('Pending','Succeeded','Failed')",False,—,'Pending',Dato transaction status asociado a tb payment transaction; descripción inferida del nombre y tipo SQL.,0
+tb_payment_transaction,amount,"decimal(12,2)",False,—,,Dato amount asociado a tb payment transaction; descripción inferida del nombre y tipo SQL.,0
+tb_payment_transaction,gateway,varchar(80),True,—,NULL,Dato gateway asociado a tb payment transaction; descripción inferida del nombre y tipo SQL.,0
+tb_payment_transaction,response_code,varchar(80),True,—,NULL,Dato response code asociado a tb payment transaction; descripción inferida del nombre y tipo SQL.,0
+tb_payment_transaction,created_at,datetime,False,—,CURRENT_TIMESTAMP,Dato created at asociado a tb payment transaction; descripción inferida del nombre y tipo SQL.,0
+tb_payment_transaction,updated_at,datetime,False,—,CURRENT_TIMESTAMP,Dato updated at asociado a tb payment transaction; descripción inferida del nombre y tipo SQL.,0
+tb_payments,ID,bigint unsigned,False,PK,,Identificador técnico de la fila.,0
+tb_payments,order_ID,int unsigned,False,FK,,Referencia a tb_orders.ID.,0
+tb_payments,payment_method_ID,int unsigned,True,FK,NULL,Referencia a tb_payment_methods.ID.,0
+tb_payments,amount,"decimal(12,2)",False,—,,Dato amount asociado a tb payments; descripción inferida del nombre y tipo SQL.,0
+tb_payments,currency,char(3),False,—,'MXN',Dato currency asociado a tb payments; descripción inferida del nombre y tipo SQL.,0
+tb_payments,payment_status,"enum('Pending','Authorized','Paid','Failed','PartiallyRefunded','Refunded')",False,—,'Pending',Dato payment status asociado a tb payments; descripción inferida del nombre y tipo SQL.,0
+tb_payments,paid_at,datetime,True,—,NULL,Dato paid at asociado a tb payments; descripción inferida del nombre y tipo SQL.,0
+tb_payments,created_at,datetime,False,—,CURRENT_TIMESTAMP,Dato created at asociado a tb payments; descripción inferida del nombre y tipo SQL.,0
+tb_payments,updated_at,datetime,False,—,CURRENT_TIMESTAMP,Dato updated at asociado a tb payments; descripción inferida del nombre y tipo SQL.,0
+tb_people,person_ID,bigint,False,PK,,Identificador del perfil personal asociado.,7502
+tb_people,user_ID,int,True,"FK, UK",NULL,Identificador del usuario asociado.,7502
+tb_people,courtesy_title,varchar(20),True,—,NULL,Dato courtesy title asociado a tb people; descripción inferida del nombre y tipo SQL.,7502
+tb_people,given_names,varchar(150),False,—,,Dato given names asociado a tb people; descripción inferida del nombre y tipo SQL.,7502
+tb_people,family_names,varchar(150),True,—,NULL,Dato family names asociado a tb people; descripción inferida del nombre y tipo SQL.,7502
+tb_people,birth_date,date,True,—,NULL,Fecha de nacimiento del perfil personal.,7502
+tb_people,gender,"enum('Hombre','Mujer','Prefiero no decirlo')",False,—,'Prefiero no decirlo',Género declarado en el perfil personal.,7502
+tb_people,country_code,char(2),True,—,NULL,Código de país asociado al perfil o teléfono.,7502
+tb_people,phone,varchar(25),True,—,NULL,Número telefónico de contacto.,7502
+tb_people,status,bit(1),True,—,b'1',Indicador binario de estado; su significado exacto depende de la aplicación.,7502
+tb_people,creation_date,datetime,True,—,CURRENT_TIMESTAMP,Fecha y hora de creación del registro.,7502
+tb_people,last_update,datetime,True,—,CURRENT_TIMESTAMP,Fecha y hora de la última modificación.,7502
+tb_products,ID,int unsigned,False,PK,,Identificador técnico de la fila.,7008
+tb_products,SKU,varchar(50),False,UK,,Código comercial único del producto.,7008
+tb_products,name,varchar(250),False,—,,"Nombre visible del producto, categoría o elemento.",7008
+tb_products,description,text,True,—,,Descripción textual complementaria.,7008
+tb_products,current_price,"decimal(10,2)",False,—,'0.00',Precio vigente del producto.,7008
+tb_products,current_stock,int unsigned,False,—,'0',Unidades registradas actualmente en existencia.,7008
+tb_products,status,bit(1),True,—,b'1',Indicador binario de estado; su significado exacto depende de la aplicación.,7008
+tb_products,creation_date,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de creación del registro.,7008
+tb_products,last_update,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de la última modificación.,7008
+tb_refunds,ID,bigint unsigned,False,PK,,Identificador técnico de la fila.,0
+tb_refunds,payment_ID,bigint unsigned,False,FK,,Referencia a tb_payments.ID.,0
+tb_refunds,return_ID,bigint unsigned,True,FK,NULL,Referencia a tb_returns.ID.,0
+tb_refunds,amount,"decimal(12,2)",False,—,,Dato amount asociado a tb refunds; descripción inferida del nombre y tipo SQL.,0
+tb_refunds,refund_status,"enum('Pending','Processing','Succeeded','Failed')",False,—,'Pending',Dato refund status asociado a tb refunds; descripción inferida del nombre y tipo SQL.,0
+tb_refunds,reason,varchar(500),True,—,NULL,Dato reason asociado a tb refunds; descripción inferida del nombre y tipo SQL.,0
+tb_refunds,refunded_at,datetime,True,—,NULL,Dato refunded at asociado a tb refunds; descripción inferida del nombre y tipo SQL.,0
+tb_refunds,created_at,datetime,False,—,CURRENT_TIMESTAMP,Dato created at asociado a tb refunds; descripción inferida del nombre y tipo SQL.,0
+tb_refunds,updated_at,datetime,False,—,CURRENT_TIMESTAMP,Dato updated at asociado a tb refunds; descripción inferida del nombre y tipo SQL.,0
+tb_returns,ID,bigint unsigned,False,PK,,Identificador técnico de la fila.,0
+tb_returns,order_ID,int unsigned,False,FK,,Referencia a tb_orders.ID.,0
+tb_returns,requested_by,int,False,FK,,Referencia a tb_users.ID.,0
+tb_returns,return_status,"enum('Requested','Approved','Rejected','InTransit','Received','Completed')",False,—,'Requested',Dato return status asociado a tb returns; descripción inferida del nombre y tipo SQL.,0
+tb_returns,reason,varchar(500),False,—,,Dato reason asociado a tb returns; descripción inferida del nombre y tipo SQL.,0
+tb_returns,created_at,datetime,False,—,CURRENT_TIMESTAMP,Dato created at asociado a tb returns; descripción inferida del nombre y tipo SQL.,0
+tb_returns,updated_at,datetime,False,—,CURRENT_TIMESTAMP,Dato updated at asociado a tb returns; descripción inferida del nombre y tipo SQL.,0
+tb_shipments,ID,bigint unsigned,False,PK,,Identificador técnico de la fila.,0
+tb_shipments,order_ID,int unsigned,False,FK,,Referencia a tb_orders.ID.,0
+tb_shipments,carrier,varchar(100),True,—,NULL,Dato carrier asociado a tb shipments; descripción inferida del nombre y tipo SQL.,0
+tb_shipments,tracking_number,varchar(150),True,UK,NULL,Dato tracking number asociado a tb shipments; descripción inferida del nombre y tipo SQL.,0
+tb_shipments,shipment_status,"enum('Pending','Ready','InTransit','Delivered','Lost','Returned')",False,—,'Pending',Dato shipment status asociado a tb shipments; descripción inferida del nombre y tipo SQL.,0
+tb_shipments,shipped_at,datetime,True,—,NULL,Dato shipped at asociado a tb shipments; descripción inferida del nombre y tipo SQL.,0
+tb_shipments,delivered_at,datetime,True,—,NULL,Dato delivered at asociado a tb shipments; descripción inferida del nombre y tipo SQL.,0
+tb_shipments,created_at,datetime,False,—,CURRENT_TIMESTAMP,Dato created at asociado a tb shipments; descripción inferida del nombre y tipo SQL.,0
+tb_shipments,updated_at,datetime,False,—,CURRENT_TIMESTAMP,Dato updated at asociado a tb shipments; descripción inferida del nombre y tipo SQL.,0
+tb_user_addresses,ID,bigint unsigned,False,PK,,Identificador técnico de la fila.,0
+tb_user_addresses,user_ID,int,False,FK,,Identificador del usuario asociado.,0
+tb_user_addresses,address_label,varchar(100),False,—,,Dato address label asociado a tb user addresses; descripción inferida del nombre y tipo SQL.,0
+tb_user_addresses,recipient_name,varchar(150),True,—,NULL,Dato recipient name asociado a tb user addresses; descripción inferida del nombre y tipo SQL.,0
+tb_user_addresses,recipient_phone,varchar(25),True,—,NULL,Dato recipient phone asociado a tb user addresses; descripción inferida del nombre y tipo SQL.,0
+tb_user_addresses,delivery_instructions,varchar(500),True,—,NULL,Dato delivery instructions asociado a tb user addresses; descripción inferida del nombre y tipo SQL.,0
+tb_user_addresses,latitude,"decimal(10,7)",True,—,NULL,Coordenada geográfica de latitud.,0
+tb_user_addresses,longitude,"decimal(10,7)",True,—,NULL,Coordenada geográfica de longitud.,0
+tb_user_addresses,is_default,tinyint(1),False,—,'0',Indicador de selección predeterminada.,0
+tb_user_addresses,status,bit(1),False,—,b'1',Indicador binario de estado; su significado exacto depende de la aplicación.,0
+tb_user_addresses,creation_date,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de creación del registro.,0
+tb_user_addresses,last_update,datetime,True,—,NULL,Fecha y hora de la última modificación.,0
+tb_users,ID,int,False,PK,,Identificador técnico de la fila.,7513
+tb_users,email,varchar(100),False,UK,,Correo electrónico asociado a la cuenta.,7513
+tb_users,nick,varchar(50),False,UK,,Alias o nombre corto de la cuenta.,7513
+tb_users,password,varchar(255),False,—,,Campo de credencial; el DDL no especifica el mecanismo de protección.,7513
+tb_users,creation_date,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de creación del registro.,7513
+tb_users,last_update,datetime,True,—,NULL,Fecha y hora de la última modificación.,7513
+tb_users,last_login,datetime,True,—,NULL,Fecha y hora del último inicio de sesión.,7513
+tb_users,status,bit(1),True,—,b'1',Indicador binario de estado; su significado exacto depende de la aplicación.,7513
+tbc_categories,ID,int unsigned,False,PK,,Identificador técnico de la fila.,100
+tbc_categories,name,varchar(120),False,UK,,"Nombre visible del producto, categoría o elemento.",100
+tbc_categories,description,text,True,—,,Descripción textual complementaria.,100
+tbc_categories,sup_id_category,int unsigned,True,FK,NULL,Categoría superior opcional; permite construir la jerarquía de categorías.,100
+tbc_categories,status,bit(1),False,—,b'1',Indicador binario de estado; su significado exacto depende de la aplicación.,100
+tbc_categories,creation_date,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de creación del registro.,100
+tbc_categories,last_update,datetime,False,—,,Fecha y hora de la última modificación.,100
+tbc_payment_methods_types,ID,int,False,PK,,Identificador técnico de la fila.,0
+tbc_payment_methods_types,code,varchar(30),False,UK,,Dato code asociado a tbc payment methods types; descripción inferida del nombre y tipo SQL.,0
+tbc_payment_methods_types,description,text,False,—,,Descripción textual complementaria.,0
+tbc_payment_methods_types,status,bit(1),False,—,b'1',Indicador binario de estado; su significado exacto depende de la aplicación.,0
+tbc_payment_methods_types,creation_date,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de creación del registro.,0
+tbc_payment_methods_types,last_update,datetime,True,—,NULL,Fecha y hora de la última modificación.,0
+tbd_address_components,ID,bigint unsigned,False,"PK, UK",,Identificador técnico de la fila.,0
+tbd_address_components,address_ID,bigint unsigned,False,"FK, UK",,Identificador de la dirección asociada.,0
+tbd_address_components,value,varchar(255),False,—,,Dato value asociado a tbd address components; descripción inferida del nombre y tipo SQL.,0
+tbd_address_components,component_type,varchar(50),False,—,,Tipo de componente que representa el valor de dirección.,0
+tbd_address_components,status,bit(1),False,—,b'1',Indicador binario de estado; su significado exacto depende de la aplicación.,0
+tbd_address_components,address_sup_ID,bigint unsigned,True,FK,NULL,Componente superior opcional dentro de la misma dirección.,0
+tbd_address_components,creation_date,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de creación del registro.,0
+tbd_address_components,last_update,datetime,True,—,NULL,Fecha y hora de la última modificación.,0
+tbd_cancellation_items,cancellation_ID,bigint unsigned,False,"PK, FK",,Referencia a tb_order_cancellations.ID.,0
+tbd_cancellation_items,order_item_ID,int unsigned,False,"PK, FK",,Referencia a tbd_order_items.ID.,0
+tbd_cancellation_items,quantity,int unsigned,False,—,,Cantidad de unidades del producto.,0
+tbd_cancellation_items,created_at,datetime,False,—,CURRENT_TIMESTAMP,Dato created at asociado a tbd cancellation items; descripción inferida del nombre y tipo SQL.,0
+tbd_cancellation_items,updated_at,datetime,False,—,CURRENT_TIMESTAMP,Dato updated at asociado a tbd cancellation items; descripción inferida del nombre y tipo SQL.,0
+tbd_cart_items,cart_ID,int unsigned,False,"PK, FK",,Identificador del carrito asociado.,0
+tbd_cart_items,provider_ID,int,False,"PK, FK",,Identificador del usuario proveedor.,0
+tbd_cart_items,product_ID,int unsigned,False,"PK, FK",,Identificador del producto asociado.,0
+tbd_cart_items,quantity,int unsigned,False,—,'1',Cantidad de unidades del producto.,0
+tbd_cart_items,created_at,datetime,False,—,CURRENT_TIMESTAMP,Dato created at asociado a tbd cart items; descripción inferida del nombre y tipo SQL.,0
+tbd_cart_items,updated_at,datetime,False,—,CURRENT_TIMESTAMP,Dato updated at asociado a tbd cart items; descripción inferida del nombre y tipo SQL.,0
+tbd_order_items,ID,int unsigned,False,PK,,Identificador técnico de la fila.,0
+tbd_order_items,seller_order_ID,int unsigned,False,FK,,Identificador del pedido de venta asociado.,0
+tbd_order_items,product_ID,int unsigned,False,FK,,Identificador del producto asociado.,0
+tbd_order_items,provider_ID,int,False,FK,,Identificador del usuario proveedor.,0
+tbd_order_items,product_name,varchar(255),False,—,,Dato product name asociado a tbd order items; descripción inferida del nombre y tipo SQL.,0
+tbd_order_items,quantity,int unsigned,False,—,,Cantidad de unidades del producto.,0
+tbd_order_items,unit_price,"decimal(12,2)",False,—,,Precio unitario aplicado en la operación.,0
+tbd_order_items,subtotal,"decimal(12,2)",True,—,,Importe subtotal calculado o almacenado para la operación.,0
+tbd_order_items,creation_date,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de creación del registro.,0
+tbd_products_categories,product_ID,int unsigned,False,"PK, FK",,Identificador del producto asociado.,15000
+tbd_products_categories,categories_ID,int unsigned,False,"PK, FK",,Identificador de la categoría asociada.,15000
+tbd_products_categories,status,bit(1),False,—,b'1',Indicador binario de estado; su significado exacto depende de la aplicación.,15000
+tbd_products_categories,creation_date,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de creación del registro.,15000
+tbd_products_categories,last_update,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de la última modificación.,15000
+tbd_products_users_providers,user_ID,int,False,"PK, FK",,Identificador del usuario asociado.,0
+tbd_products_users_providers,product_ID,int unsigned,False,"PK, FK",,Identificador del producto asociado.,0
+tbd_products_users_providers,type_ownership,"enum('Owner','Reseller','Distributor')",True,—,NULL,Rol del usuario con respecto al producto.,0
+tbd_products_users_providers,status,bit(1),False,—,b'1',Indicador binario de estado; su significado exacto depende de la aplicación.,0
+tbd_products_users_providers,available_date,datetime,False,—,,Fecha desde la que se declara disponible la relación producto-proveedor.,0
+tbd_products_users_providers,creation_date,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de creación del registro.,0
+tbd_products_users_providers,last_update,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de la última modificación.,0
+tbd_return_items,return_ID,bigint unsigned,False,"PK, FK",,Referencia a tb_returns.ID.,0
+tbd_return_items,order_item_ID,int unsigned,False,"PK, FK",,Referencia a tbd_order_items.ID.,0
+tbd_return_items,quantity,int unsigned,False,—,,Cantidad de unidades del producto.,0
+tbd_return_items,condition_note,varchar(500),True,—,NULL,Dato condition note asociado a tbd return items; descripción inferida del nombre y tipo SQL.,0
+tbd_return_items,created_at,datetime,False,—,CURRENT_TIMESTAMP,Dato created at asociado a tbd return items; descripción inferida del nombre y tipo SQL.,0
+tbd_return_items,updated_at,datetime,False,—,CURRENT_TIMESTAMP,Dato updated at asociado a tbd return items; descripción inferida del nombre y tipo SQL.,0
+tbd_user_payment_methods,ID,bigint unsigned,False,PK,,Identificador técnico de la fila.,0
+tbd_user_payment_methods,user_ID,int,False,FK,,Identificador del usuario asociado.,0
+tbd_user_payment_methods,payment_method_type_ID,int,False,FK,,Identificador del tipo de método de pago.,0
+tbd_user_payment_methods,provider,varchar(60),False,UK,,Proveedor o procesador externo del método de pago.,0
+tbd_user_payment_methods,provider_method_ref,varchar(255),False,UK,,Referencia externa del método en el proveedor de pagos.,0
+tbd_user_payment_methods,label,varchar(100),True,—,NULL,Dato label asociado a tbd user payment methods; descripción inferida del nombre y tipo SQL.,0
+tbd_user_payment_methods,last_four,char(4),True,—,NULL,Últimos cuatro dígitos del medio de pago.,0
+tbd_user_payment_methods,is_default,tinyint(1),False,—,'0',Indicador de selección predeterminada.,0
+tbd_user_payment_methods,status,bit(1),False,—,b'1',Indicador binario de estado; su significado exacto depende de la aplicación.,0
+tbd_user_payment_methods,creation_date,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de creación del registro.,0
+tbd_user_payment_methods,last_update,datetime,True,—,NULL,Fecha y hora de la última modificación.,0
+tbd_users_wishlist_products,user_ID,int,False,"PK, FK",,Identificador del usuario asociado.,0
+tbd_users_wishlist_products,product_ID,int unsigned,False,"PK, FK",,Identificador del producto asociado.,0
+tbd_users_wishlist_products,status,bit(1),False,—,b'1',Indicador binario de estado; su significado exacto depende de la aplicación.,0
+tbd_users_wishlist_products,creation_date,datetime,False,—,CURRENT_TIMESTAMP,Fecha y hora de creación del registro.,0
+tbd_users_wishlist_products,last_update,datetime,False,—,,Fecha y hora de la última modificación.,0
